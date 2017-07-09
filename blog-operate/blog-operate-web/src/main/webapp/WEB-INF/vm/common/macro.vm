@@ -1,0 +1,54 @@
+#macro(showPage $page)
+#set($appendingNum = 2)
+#set($prefixAndSuffixNum = 1)
+    <nav class="page-navigator">
+#if($page && ${page.totalCount}>0)
+#if($page.hasPreviousPage)
+        <a class="extend prev" rel="prev" href="/post?page=$page.previousPage">上一页</a>
+#end
+#if($prefixAndSuffixNum >= 1 && $page.currentPage > $prefixAndSuffixNum)
+#foreach($i in [1..$prefixAndSuffixNum])
+        <a class="page-number" href="/post?page=$i">$i</a>
+#end
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0 && $page.currentPage - 1 > $prefixAndSuffixNum + $appendingNum)
+        <a class="space">&hellip;</a>
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 1)
+#set($from = $prefixAndSuffixNum + 1)
+#set($to = $page.currentPage - 1)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $page.currentPage - $i <= $appendingNum)
+        <a class="page-number" href="/post?page=$i">$i</a>
+#end
+#end
+#end
+        <a class="page-number current">$page.currentPage</a>
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 1)
+#set($from = $page.currentPage + 1)
+#set($to = $page.currentPage + $appendingNum)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $i - $page.currentPage <= $appendingNum) ## 距离
+        <a class="page-number" href="/post?page=$i">$i</a>
+#end
+#end
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0 && $page.pageCount - $page.currentPage > $prefixAndSuffixNum + $appendingNum)
+        <a class="space">&hellip;</a>
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0)
+#set($from = $page.pageCount - $prefixAndSuffixNum + 1)
+#set($to = $page.pageCount)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $i > $page.currentPage + $appendingNum)
+        <a class="page-number" href="/post?page=$i">$i</a>
+#end
+#end
+#end
+#if($page.hasNextPage)
+        <a class="extend next" rel="next" href="/post?page=$page.nextPage">下一页</a>
+#end
+#else
+#end
+    </nav>
+#end

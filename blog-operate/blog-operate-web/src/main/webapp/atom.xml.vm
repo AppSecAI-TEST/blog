@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <title>$!{title}</title>
+    <subtitle>$!{subtitle}</subtitle>
+    <link href="$!{uri}" rel="self"/>
+    <link href="$!{site}"/>
+    <updated>$!{updated}</updated>
+    <id>$!{site}</id>
+    <author>
+        <name>$!{author}</name>
+    </author>
+    <generator uri="$!{site}">$!{site}</generator>
+#foreach($item in $contentDomainList)
+    <entry>
+        <title>$!{item.title}</title>
+        <link href="$!{item.extendMap.url}"/>
+        <id>$!{item.extendMap.url}</id>
+        <published>$!{item.extendMap.published}</published>
+        <updated>$!{item.extendMap.updated}</updated>
+
+        <content type="html"><![CDATA[$!{item.extendMap.content}]]></content>
+
+        <summary type="html">
+            <![CDATA[<p>$!{item.extendMap.summary}</p>]]>
+        </summary>
+#foreach($category in $item.extendMap.categoryMap.entrySet())
+        <category term="$!{category.key}" scheme="$!{category.value}"/>
+#end
+    </entry>
+#end
+</feed>

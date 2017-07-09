@@ -1,0 +1,27 @@
+    <div id="header">
+        <div class="site-name">
+            <h1 class="hidden">clear</h1>
+            <a id="logo" href="/">clear</a>
+            <p class="description">今様，素晴</p>
+        </div>
+        <div id="nav-menu">
+            <a href="/" #if($!{menu} == 'index') class="current"#end>
+                <i class="fa fa-home"> 首页</i>
+            </a>
+            <a href="/archives" #if($!{menu} == 'archives') class="current"#end>
+                <i class="fa fa-archive"> 归档</i>
+            </a>
+            <a href="/about" #if($!{menu} == 'about') class="current"#end>
+                <i class="fa fa-user"> 关于</i>
+            </a>
+            <a href="/history" #if($!{menu} == 'history') class="current"#end>
+                <i class="fa fa-book"> 历史</i>
+            </a>
+            <a href="/guestbook" #if($!{menu} == 'guestbook') class="current"#end>
+                <i class="fa fa-comments"> 留言</i>
+            </a>
+            <a href="/atom.xml" data-no-instant>
+                <i class="fa fa-rss"> 订阅</i>
+            </a>
+        </div>
+    </div>
