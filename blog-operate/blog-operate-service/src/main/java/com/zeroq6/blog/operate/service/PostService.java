@@ -72,7 +72,8 @@ public class PostService extends BaseService<PostDomain, Long> {
 
     public BaseResponse<Map<String, Object>> getGuestBook() {
         try {
-            return show(null, EmPostPostType.LIUYAN.value());
+            PostDomain postDomain = selectOne(new PostDomain().setPostType(EmPostPostType.LIUYAN.value()));
+            return show(postDomain.getId(), EmPostPostType.LIUYAN.value());
         } catch (Exception e) {
             logger.error("查询留言异常", e);
             return new BaseResponse<Map<String, Object>>(false, e.getMessage(), null);
@@ -245,19 +246,6 @@ public class PostService extends BaseService<PostDomain, Long> {
             logger.error("查询归档异常, categoryCode: " + category + ", tag: " + tag, e);
             return new BaseResponse<Map<String, List<PostDomain>>>(false, e.getMessage(), null);
         }
-    }
-
-
-    private static String transferCommentToHtml(CommentDomain commentDomain) {
-        String comment = commentDomain.getContent();
-        if (StringUtils.isBlank(comment)) {
-            throw new RuntimeException("评论不能为空, " + comment);
-        }
-        if (commentDomain.getParentType() != EmCommentParentType.PINGLUN.value()) {
-            return comment.replace("\n", "<br />");
-        }
-        String html = comment.replace("[quote]", "<div class='quote'><a href='" + "#c" + commentDomain.getParentId() + "'>").replaceFirst(":", ":</a>").replace("[/quote]", "</div>").replace("\n", "<br />");
-        return html;
     }
 
 
