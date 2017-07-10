@@ -18,6 +18,7 @@ import com.zeroq6.common.utils.MyDateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -47,6 +48,9 @@ public class PostService extends BaseService<PostDomain, Long> {
 
     @Autowired
     private PostDao contentDao;
+
+    @Autowired
+    private PostManager postManager;
 
     @Autowired
     private RelationService relationService;
@@ -162,17 +166,10 @@ public class PostService extends BaseService<PostDomain, Long> {
             // 只有文章才查询标签，上一篇，下一篇文章
             if (type == EmPostPostType.WENZHANG.value()) {
                 // 标签
-                List<RelationDomain> relationTagList = relationService.selectList(new RelationDomain().setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setParentId(post.getId() + ""));
-                List<DictDomain> tags = new ArrayList<DictDomain>();
-                for (RelationDomain relationTag : relationTagList) {
-                    tags.add(dictManager.selectByKey(Long.valueOf(relationTag.getChildId())));
-                }
-                dataMap.put("tags", tags);
+                dataMap.put("tags", postManager.getTagsById(id));
 
                 // 分类
-                RelationDomain relationCategory = relationService.selectOne(new RelationDomain().setType(EmRelationType.WEN_ZHANG_FENLEI.value()).setParentId(post.getId() + ""));
-                DictDomain category = dictManager.selectByKey(Long.valueOf(relationCategory.getChildId()));
-                dataMap.put("category", category);
+                dataMap.put("category", postManager.getCategory(id));
 
                 // 上一篇，下一篇
                 PostDomain prev = contentDao.selectPrevPost(post.getId());
@@ -192,6 +189,7 @@ public class PostService extends BaseService<PostDomain, Long> {
             return new BaseResponse<Map<String, Object>>(false, e.getMessage(), null);
         }
     }
+
 
     /**
      * 归档，可指定分类，标签

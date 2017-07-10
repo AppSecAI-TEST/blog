@@ -60,7 +60,6 @@
             <list>
                 <value>classpath:conf/important.properties</value>
                 <value>classpath:conf/system.properties</value>
-                <value>classpath:conf/atom.properties</value>
             </list>
         </property>
     </bean>

@@ -2,15 +2,15 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <title>$!{title}</title>
     <subtitle>$!{subtitle}</subtitle>
-    <link href="$!{uri}" rel="self"/>
-    <link href="$!{site}"/>
+    <link href="$!{atom.uri}" rel="self"/>
+    <link href="$!{url}"/>
     <updated>$!{updated}</updated>
-    <id>$!{site}</id>
+    <id>$!{url}</id>
     <author>
-        <name>$!{author}</name>
+        <name>$!{atom.author}</name>
     </author>
-    <generator uri="$!{site}">$!{site}</generator>
-#foreach($item in $contentDomainList)
+    <generator uri="$!{atom.generator.url}">$!{atom.generator.text}</generator>
+#foreach($item in $postDomainList)
     <entry>
         <title>$!{item.title}</title>
         <link href="$!{item.extendMap.url}"/>
@@ -23,8 +23,11 @@
         <summary type="html">
             <![CDATA[<p>$!{item.extendMap.summary}</p>]]>
         </summary>
-#foreach($category in $item.extendMap.categoryMap.entrySet())
-        <category term="$!{category.key}" scheme="$!{category.value}"/>
+#foreach($entry in $item.extendMap.tags)
+        <category term="$!{entry.key}" scheme="$!{entry.value}"/>
+#end
+#foreach($entry in $item.extendMap.category)
+        <category term="$!{entry.key}" scheme="$!{entry.value}"/>
 #end
     </entry>
 #end

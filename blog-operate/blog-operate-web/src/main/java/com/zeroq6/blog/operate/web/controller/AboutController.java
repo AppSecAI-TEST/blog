@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yuuki asuna on 2017/5/24.
  */
 @Controller
 @RequestMapping("/about")
-public class AboutController extends BaseController{
+public class AboutController extends BaseController {
 
     @Autowired
     private PostService postService;
@@ -36,12 +37,10 @@ public class AboutController extends BaseController{
 
 
     @RequestMapping
-    public String index(Model view){
-        BaseResponse<List<DictDomain>> result = dictService.getAboutInfo();
-        if(result.isSuccess()){
-            for(DictDomain item : result.getBody()){
-                view.addAttribute(item.getDictKey(), item.getDictValue());
-            }
+    public String index(Model view) {
+        BaseResponse<Map<String, String>> result = dictService.getAboutInfo();
+        if (result.isSuccess()) {
+            view.addAllAttributes(result.getBody());
             return baseDir + "/about";
         }
         return null;

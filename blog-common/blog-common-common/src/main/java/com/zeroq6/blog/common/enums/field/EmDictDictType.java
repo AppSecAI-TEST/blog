@@ -16,7 +16,8 @@ public enum EmDictDictType implements EnumApi{
     LIANJIE(3, "链接"),
     LISHI(4, "历史"),
     SHEJIAO(5, "社交"),
-    ZHANDIAN_XINXI(6, "站点信息")
+    ZHANDIAN_XINXI(6, "站点信息"),
+    DING_YUE(7, "订阅")
 ;
 
     private final int value;

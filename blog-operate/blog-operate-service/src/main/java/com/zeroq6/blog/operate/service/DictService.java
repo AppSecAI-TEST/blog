@@ -9,13 +9,14 @@ import com.zeroq6.common.base.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 自定义开始 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
  */
 
 /**自定义结束 */
@@ -61,13 +62,14 @@ public class DictService extends BaseService<DictDomain, Long> {
     }
 
 
-    public BaseResponse<List<DictDomain>> getAboutInfo() {
+    public BaseResponse<Map<String, String>> getAboutInfo() {
         try {
-            List<DictDomain> list = dictManager.getDictByType(Arrays.asList(EmDictDictType.SHEJIAO.value(), EmDictDictType.ZHANDIAN_XINXI.value()));
-            return new BaseResponse<List<DictDomain>>(true, "成功", list);
+            List<DictDomain> list = dictManager.getDictByTypeList(Arrays.asList(EmDictDictType.SHEJIAO.value(), EmDictDictType.ZHANDIAN_XINXI.value()));
+            Map<String, String> result = dictManager.transferMap(list);
+            return new BaseResponse<Map<String, String>>(true, "成功", result);
         } catch (Exception e) {
             logger.error("获取关于信息异常, ", e);
-            return new BaseResponse<List<DictDomain>>(false, e.getMessage(), null);
+            return new BaseResponse<Map<String, String>>(false, e.getMessage(), null);
         }
     }
 
