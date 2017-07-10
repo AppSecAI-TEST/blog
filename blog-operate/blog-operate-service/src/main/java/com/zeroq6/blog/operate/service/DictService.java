@@ -9,6 +9,7 @@ import com.zeroq6.common.base.BaseResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -45,11 +46,7 @@ public class DictService extends BaseService<DictDomain, Long> {
 
     public BaseResponse<List<DictDomain>> getHistory() {
         try {
-            DictDomain query = new DictDomain();
-            query.setDictType(EmDictDictType.LISHI.value());
-            query.setOrderField("dictKey");
-            query.setOrderFieldType("DESC");
-            List<DictDomain> list = selectList(query);
+            List<DictDomain> list = dictManager.getDictByType(EmDictDictType.LISHI.value());
             Collections.sort(list, new Comparator<DictDomain>() {
                 @Override
                 public int compare(DictDomain o1, DictDomain o2) {
@@ -59,6 +56,17 @@ public class DictService extends BaseService<DictDomain, Long> {
             return new BaseResponse<List<DictDomain>>(true, "成功", list);
         } catch (Exception e) {
             logger.error("获取历史异常, ", e);
+            return new BaseResponse<List<DictDomain>>(false, e.getMessage(), null);
+        }
+    }
+
+
+    public BaseResponse<List<DictDomain>> getAboutInfo() {
+        try {
+            List<DictDomain> list = dictManager.getDictByType(Arrays.asList(EmDictDictType.SHEJIAO.value(), EmDictDictType.ZHANDIAN_XINXI.value()));
+            return new BaseResponse<List<DictDomain>>(true, "成功", list);
+        } catch (Exception e) {
+            logger.error("获取关于信息异常, ", e);
             return new BaseResponse<List<DictDomain>>(false, e.getMessage(), null);
         }
     }

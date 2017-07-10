@@ -54,6 +54,14 @@ public class DictManager extends BaseManager<DictDomain, Long> implements Initia
         return getDictByType(type, null);
     }
 
+    public List<DictDomain> getDictByType(List<Integer> typeList){
+        List<DictDomain> list = new ArrayList<DictDomain>();
+        for(Integer type : typeList){
+            list.addAll(getDictByType(type));
+        }
+        return list;
+    }
+
     public List<DictDomain> getDictByType(int type, List<String> dictKeyList){
         List<DictDomain> result = new ArrayList<DictDomain>();
         for(DictDomain dictDomain : dictDomainCacheList){

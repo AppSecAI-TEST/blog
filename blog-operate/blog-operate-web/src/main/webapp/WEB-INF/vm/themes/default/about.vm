@@ -1,22 +1,30 @@
                 <div class="post"><h1 class="post-title">关于</h1>
                     <div class="post-content">
-                        <p>
-                            <i class="fa fa-user"></i>
-                            Nickname: <a href="javascript:void(0);">icgeass</a>
+#if($!{username})
+                        <p><i class="fa fa-user"></i>
+                            Nickname: <a href="javascript:void(0);">$!{username}</a>
                         </p>
-                        <p>
-                            <i class="fa fa-envelope"></i>
-                            Email: <a href="mailto:icgeass@hotmail.com" target="_blank" rel="external">icgeass@hotmail.com</a>
+#end
+#if($!{email})
+                        <p><i class="fa fa-envelope"></i>
+                            Email: <a href="mailto:$!{email}" target="_blank" rel="external">$!{email}</a>
                         </p>
+#end
+#if($!{github})
                         <p><i class="fa fa-github"></i>
-                            Github: <a href="https://github.com/icgeass" target="_blank" rel="external">@icgeass</a>
+                            Github: <a href="https://github.com/$!{github}" target="_blank" rel="external">@$!{github}</a>
                         </p>
+#end
+#if($!{weibo})
                         <p><i class="fa fa-weibo"></i>
-                            Weibo: <a href="http://weibo.com/6zeroq" target="_blank" rel="external">@6zeroq</a>
+                            Weibo: <a href="http://weibo.com/$!{weibo}" target="_blank" rel="external">@$!{weibo}</a>
                         </p>
+#end
+#if($!{twitter})
                         <p><i class="fa fa-twitter"></i>
-                            Twitter: <a href="https://twitter.com/icgeass" target="_blank" rel="external">@icgeass</a>
+                            Twitter: <a href="https://twitter.com/$!{twitter}" target="_blank" rel="external">@$!{twitter}</a>
                         </p>
+#end
                         <iframe src="/static/default/donate-page/simple/index.html?item=easy-select-style" style="overflow-x:hidden;overflow-y:hidden; border:0xp none #fff; height:190px; width:310px"
                                 frameborder="0" scrolling="no">
                         </iframe>
