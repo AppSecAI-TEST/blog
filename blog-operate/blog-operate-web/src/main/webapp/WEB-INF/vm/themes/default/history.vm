@@ -10,103 +10,16 @@
                                             <div class="dot_tp"></div>
                                             <div class="born">Now</div>
                                             <div class="dot_bt"></div>
+#foreach($item in $!{historyList})
                                             <div class="timeline-entry">
                                                 <div class="timeline-entry-inner">
                                                     <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">1</span></div>
+                                                            class="number">$!{item.dictKey}</span></div>
                                                     <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2007-初试个人博客，先后在天涯博客和Blogger上落脚</span></div>
+                                                            class="word">$!{item.dictValue}</span></div>
                                                 </div>
                                             </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">2</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2009.06-开始用Wordpress搭建独立博客，注册域名aabaa.cn，使用由cmded提供的免费虚拟主机</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">4</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2010-cn域名因过期或未备案被收回，导致博客消失一段时间</span></div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">5</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2011.06-购买域名9441.me，网站重新建立，部分数据丢失</span></div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">6</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2014.01-离域名到期还有半年时更换新域名haomwei.com，原域名301重定向至此</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">7</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2014.02-博客程序由Wordpress更换至国产PHP程序Typecho</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">8</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2014.03-主机迁移至性价比出众的香港TECHNETCAL付费空间</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">9</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2015.01-主机短暂迁移至Bandwagon Host（搬瓦工）提供的廉价VPS</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">10</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2015.02-博客程序由Typecho更换至Hexo，并同时托管于Github和Gitcafe</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">11</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2015.06-域名完成国内备案，开始使用又拍云CDN加速服务，并开启全站https访问</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="timeline-entry">
-                                                <div class="timeline-entry-inner">
-                                                    <div data-wow-delay="0.2s" class="timeline-icon wow fadeInUp"><span
-                                                            class="number">12</span></div>
-                                                    <div data-wow-delay="0.2s" class="timeline-label wow fadeInUp"><span
-                                                            class="word">2015.10-服务器迁移至阿里云ECS青岛机房，海外访问解析至DigitalOcean</span>
-                                                    </div>
-                                                </div>
-                                            </div>
-
+#end
                                         </div>
                                     </div>
                                 </div>
