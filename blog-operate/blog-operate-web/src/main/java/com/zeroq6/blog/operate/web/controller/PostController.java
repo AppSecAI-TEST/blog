@@ -36,32 +36,23 @@ public class PostController extends BaseController {
 
     @RequestMapping
     public String index(String page, Model view) throws Exception {
-        try {
-            BaseResponse<Page<PostDomain>> result = postService.index(page);
-            if (result.isSuccess()) {
-                view.addAttribute("page", result.getBody());
-                return baseDir + "/index" ;
-            }
-            return baseDir + "/500" ;
-        } catch (Exception e) {
-            logger.error("文章列表异常, " + page, e);
-            return baseDir + "/500" ;
+        BaseResponse<Page<PostDomain>> result = postService.index(page);
+        if (result.isSuccess()) {
+            view.addAttribute("page", result.getBody());
+            return baseDir + "/index";
         }
+        return null;
+
     }
 
     @RequestMapping(value = "/show/{id}")
     public String show(@PathVariable Long id, Model view) throws Exception {
-        try {
-            BaseResponse<Map<String, Object>> result = postService.show(id, EmPostPostType.WENZHANG.value());
-            if (result.isSuccess()) {
-                view.addAllAttributes(result.getBody());
-                return baseDir + "/post" ;
-            }
-            return redirectIndex();
-        } catch (Exception e) {
-            logger.error("文章查看异常, " + id, e);
-            return redirectIndex();
+        BaseResponse<Map<String, Object>> result = postService.show(id, EmPostPostType.WENZHANG.value());
+        if (result.isSuccess()) {
+            view.addAllAttributes(result.getBody());
+            return baseDir + "/post";
         }
+        return null;
     }
 
 

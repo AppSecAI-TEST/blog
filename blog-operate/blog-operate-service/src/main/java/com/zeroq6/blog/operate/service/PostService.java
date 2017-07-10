@@ -7,15 +7,14 @@ import com.zeroq6.blog.common.domain.CommentDomain;
 import com.zeroq6.blog.common.domain.DictDomain;
 import com.zeroq6.blog.common.domain.PostDomain;
 import com.zeroq6.blog.common.domain.RelationDomain;
-import com.zeroq6.blog.common.enums.field.EmDictDictType;
-import com.zeroq6.blog.common.enums.field.EmPostPostType;
-import com.zeroq6.blog.common.enums.field.EmPostStatus;
+import com.zeroq6.blog.common.enums.field.*;
 import com.zeroq6.blog.operate.manager.DictManager;
 import com.zeroq6.blog.operate.manager.PostManager;
 import com.zeroq6.common.base.BaseResponse;
 import com.zeroq6.common.base.Page;
-import com.zeroq6.common.utils.CommentUtils;
+import com.zeroq6.common.utils.GravatarUtils;
 import com.zeroq6.common.utils.MarkdownUtils;
+import com.zeroq6.common.utils.MyDateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +24,12 @@ import java.util.*;
 
 /**
  * 自定义开始 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
  */
 
 /**自定义结束 */
@@ -133,7 +138,6 @@ public class PostService extends BaseService<PostDomain, Long> {
     }
 
 
-
     /**
      * 查看文章详情页
      * @param id
@@ -141,6 +145,12 @@ public class PostService extends BaseService<PostDomain, Long> {
      */
     public BaseResponse<Map<String, Object>> show(Long id, int type) {
         try {
+            if (type != EmPostPostType.LIUYAN.value() && type != EmPostPostType.WENZHANG.value()) {
+                throw new RuntimeException("类型错误, " + type);
+            }
+            if (null == id) {
+                throw new RuntimeException("id不能为空, " + id);
+            }
             // 文章
             PostDomain post = this.selectOne(new PostDomain().setId(id).setStatus(EmPostStatus.YI_FABU.value()).setPostType(type));
             post.getExtendMap().put("content", MarkdownUtils.parse(post.getContent()));
@@ -149,14 +159,27 @@ public class PostService extends BaseService<PostDomain, Long> {
             List<CommentDomain> commentDomainList = commentService.selectList(new CommentDomain().setPostId(id).setOrderField("id").setOrderFieldType("ASC"));
             for (CommentDomain item : commentDomainList) {
                 Map<String, Object> extendMap = item.getExtendMap();
-                extendMap.put("comment", CommentUtils.transferCommentToHtml(item));
-                extendMap.put("avatar", CommentUtils.getAvatar(item.getEmail()));
-                extendMap.put("timeBefore", CommentUtils.getDateBeforeNow(item.getCreatedTime()));
+                extendMap.put("avatar", GravatarUtils.getAvatar(item.getEmail()));
+                extendMap.put("timeBefore", MyDateUtils.getDateBeforeNow(item.getCreatedTime()));
                 extendMap.put("timeFmt", commentFmt.format(item.getCreatedTime()));
+                if (item.getParentType() == EmCommentParentType.PINGLUN.value()) {
+                    extendMap.put("commentParent", commentService.selectByKey(item.getParentId()));
+                }
             }
             // 只有文章才查询标签，上一篇，下一篇文章
             if (type == EmPostPostType.WENZHANG.value()) {
                 // 标签
+                List<RelationDomain> relationTagList = relationService.selectList(new RelationDomain().setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setParentId(post.getId() + ""));
+                List<DictDomain> tags = new ArrayList<DictDomain>();
+                for (RelationDomain relationTag : relationTagList) {
+                    tags.add(dictManager.selectByKey(Long.valueOf(relationTag.getChildId())));
+                }
+                dataMap.put("tags", tags);
+
+                // 分类
+                RelationDomain relationCategory = relationService.selectOne(new RelationDomain().setType(EmRelationType.WEN_ZHANG_FENLEI.value()).setParentId(post.getId() + ""));
+                DictDomain category = dictManager.selectByKey(Long.valueOf(relationCategory.getChildId()));
+                dataMap.put("category", category);
 
                 // 上一篇，下一篇
                 PostDomain prev = contentDao.selectPrevPost(post.getId());
@@ -193,7 +216,7 @@ public class PostService extends BaseService<PostDomain, Long> {
                 RelationDomain query1 = new RelationDomain();
                 // query1.setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setChildId(dictDomain.getId());
                 List<RelationDomain> relationDomainList = relationService.selectList(query1);
-                if(relationDomainList.isEmpty()){
+                if (relationDomainList.isEmpty()) {
                     return new BaseResponse<Map<String, List<PostDomain>>>(true, "成功", data);
                 }
                 List<String> ids = new ArrayList<String>();
@@ -216,6 +239,20 @@ public class PostService extends BaseService<PostDomain, Long> {
             return new BaseResponse<Map<String, List<PostDomain>>>(false, e.getMessage(), null);
         }
     }
+
+
+    private static String transferCommentToHtml(CommentDomain commentDomain) {
+        String comment = commentDomain.getContent();
+        if (StringUtils.isBlank(comment)) {
+            throw new RuntimeException("评论不能为空, " + comment);
+        }
+        if (commentDomain.getParentType() != EmCommentParentType.PINGLUN.value()) {
+            return comment.replace("\n", "<br />");
+        }
+        String html = comment.replace("[quote]", "<div class='quote'><a href='" + "#c" + commentDomain.getParentId() + "'>").replaceFirst(":", ":</a>").replace("[/quote]", "</div>").replace("\n", "<br />");
+        return html;
+    }
+
 
     /**自定义结束 */
 

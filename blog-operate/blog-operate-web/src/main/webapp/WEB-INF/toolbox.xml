@@ -25,9 +25,4 @@
         <class>com.zeroq6.common.web.LoginContextErp</class>
         <scope>application</scope>
     </tool>
-    <tool>
-        <key>CommentUtils</key>
-        <class>com.zeroq6.common.utils.CommentUtils</class>
-        <scope>application</scope>
-    </tool>
 </toolbox>

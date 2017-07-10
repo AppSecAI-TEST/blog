@@ -21,6 +21,8 @@ public class VelocityManager {
 
     private VelocityEngine velocityEngine = null;
 
+    private String resourceRootPath = null;
+
     private VelocityEngine getVelocityEngine() {
         try {
             if (null != velocityEngine) {
@@ -54,8 +56,12 @@ public class VelocityManager {
 
     public String getResourceRootPath(){
         try{
+            if(null != resourceRootPath){
+                return resourceRootPath;
+            }
             Object obj = getVelocityEngine().getProperty(VelocityEngine.FILE_RESOURCE_LOADER_PATH);
-            return new File((String) obj).getCanonicalPath();
+            resourceRootPath = new File((String) obj).getCanonicalPath();
+            return resourceRootPath;
         }catch (Exception e){
             throw new RuntimeException(e);
         }

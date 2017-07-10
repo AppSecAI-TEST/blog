@@ -13,11 +13,16 @@
                                 </div>
                                 <div class="content">
                                     <div class="body">
-                                        $!{item.extendMap.comment}
+#if($!{item.extendMap.commentParent})
+                                        <div class='quote'>
+                                            <a href='#c$!{item.extendMap.commentParent.id}'>$!{item.extendMap.commentParent.username} said:</a><br />$!{item.extendMap.commentParent.content}
+                                        </div>
+#end
+                                        $!{item.content}
                                     </div>
                                     <div class="post-footer" style="clear: left;">
                                         <ul class="flat-list pipe-list">
-                                            <li><a href="#newComment" onclick="replyTo('$!{post.id}', 'c$!{item.id}')">回复</a>
+                                            <li><a href="#commentArea" onclick="replyTo('$!{post.id}', 'c$!{item.id}')">回复</a>
                                             </li>
                                         </ul>
                                     </div>
@@ -25,9 +30,9 @@
                             </div>
 #end
                         </div>
-                        <div id="newComment" style="clear: both;">
+                        <div id="commentArea" style="clear: both;">
                             <div class="cancel-comment-reply">
-                                <a class="response" href="#newComment" onclick="replyTo('$!{post.id}', '$!{post.id}')">发表新评论</a>
+                                <a class="response" href="#commentArea" onclick="replyTo('$!{post.id}', '$!{post.id}')">发表新评论</a>
                             </div>
                             <form action="/comment/post" method="post">
                                 <div>
@@ -39,10 +44,10 @@
                                            value="" maxlength="100">
                                 </div>
                                 <div>
-                                    <input type="hidden" name="contentId" value="$!{post.id}">
+                                    <input type="hidden" name="postId" value="$!{post.id}">
                                     <input type="hidden" name="parentId" value="$!{post.id}">
                                     <input type="hidden" name="parentType" value="1">
-                                    <textarea name="comment" class="form-control" wrap="hard" placeholder="在这里输入你的评论" required></textarea>
+                                    <textarea name="content" class="form-control" wrap="soft" placeholder="在这里输入你的评论" required></textarea>
                                     <input type="submit" class="submit" onclick="return applyComment()" value="提交评论" >
                                 </div>
                             </form>

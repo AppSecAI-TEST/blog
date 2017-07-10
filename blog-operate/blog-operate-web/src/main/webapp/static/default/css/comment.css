@@ -135,12 +135,21 @@ div.body .quote {
     margin: 0 0 1em 0;
     padding: 1em;
     border: 1px solid #666;
-    background: rgba(252, 249, 249, 0.5)
+    background: rgba(252, 249, 249, 0.5);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 75ch;
+}
+div.content .body {
+    word-wrap: break-word;
+    max-width: 75ch;
 }
 
 .quote p, .quote div {
-    margin-bottom: 0em
+    margin-bottom: 0em;
 }
+
 .submit {
     display: block;
     margin: 0 auto;

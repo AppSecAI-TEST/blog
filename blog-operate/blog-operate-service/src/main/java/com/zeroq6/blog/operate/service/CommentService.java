@@ -18,7 +18,9 @@ import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 
-/**自定义开始 */
+/**
+ * 自定义开始 自定义结束
+ */
 
 /**自定义结束 */
 
@@ -60,10 +62,10 @@ public class CommentService extends BaseService<CommentDomain, Long> {
      * @param commentDomain
      * @return
      */
-    public BaseResponse<String> post(CommentDomain commentDomain){
-        try{
+    public BaseResponse<String> post(CommentDomain commentDomain) {
+        try {
             // 校验
-            if (StringUtils.isNotBlank(commentDomain.getUrl()) && !UrlValidator.getInstance().isValid(commentDomain.getUrl())) {
+            if (!UrlValidator.getInstance().isValid(commentDomain.getUrl())) {
                 throw new RuntimeException("url格式错误");
             }
             if (!EmailValidator.getInstance().isValid(commentDomain.getEmail())) {
@@ -75,22 +77,26 @@ public class CommentService extends BaseService<CommentDomain, Long> {
             if (null == commentDomain.getPostId() || null == commentDomain.getParentType() || null == commentDomain.getParentId()) {
                 throw new RuntimeException("文章id，关联id，关联类型不能为空");
             }
-            // 查关联内容
+            // 文章id是否非法
             PostDomain query = new PostDomain();
-            query.setId(commentDomain.getPostId()).setStatus(EmPostStatus.YI_FABU.value());
+            query.setId(commentDomain.getPostId());
+            query.setStatus(EmPostStatus.YI_FABU.value());
             query.put("postTypeIn", Arrays.asList(new Integer[]{EmPostPostType.WENZHANG.value(), EmPostPostType.LIUYAN.value()}));
             PostDomain post = postService.selectOne(query);
-            // 查关联评论是否存在
+            //
             if (commentDomain.getParentType() == EmCommentParentType.PINGLUN.value()) {
-                this.selectOne(new CommentDomain().setPostId(commentDomain.getPostId()).setId(commentDomain.getParentId()));
+                this.selectOne(new CommentDomain().setPostId(commentDomain.getPostId()).setId(commentDomain.getParentId()), false);
+            }else if(commentDomain.getParentType() == EmCommentParentType.WENZHANG.value()){
+                commentDomain.setParentId(commentDomain.getPostId());
+            }else{
+                throw new RuntimeException("评论父类型非法, " + commentDomain.getParentType());
             }
             return commentManager.post(commentDomain, post);
-        }catch (Exception e){
+        } catch (Exception e) {
             logger.error("提交评论异常, " + JSON.toJSONString(commentDomain), e);
             return new BaseResponse<String>(false, e.getMessage(), null);
         }
     }
-
 
 
     /**自定义结束 */

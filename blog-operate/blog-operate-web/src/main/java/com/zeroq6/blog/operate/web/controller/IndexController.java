@@ -12,13 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("/")
 public class IndexController extends BaseController{
 
-
-    @RequestMapping(value = "vm", method = {RequestMethod.GET, RequestMethod.POST})
-    public String vm(String vm) throws Exception{
-        return baseDir + "/" + vm;
-    }
-
-
     @RequestMapping(value = "", method = {RequestMethod.GET, RequestMethod.POST})
     public String index() throws Exception {
         return "redirect:/post" ;

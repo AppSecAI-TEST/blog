@@ -8,7 +8,6 @@
     <script type="text/javascript" src="/static/default/js/js.cookie-2.1.4.min.js?v=2.0.1"></script>
     <script type="text/javascript" src="/static/default/js/comment.js?v=2.0.1"></script>
     <script type="text/javascript" src="/static/default/js/prism.js?v=2.0.1"></script>
-    #*<script type="text/javascript" src="/static/default/js/nprogress.js?v=2.0.1"></script>*#
     <script src="//cdn.bootcss.com/instantclick/3.0.1/instantclick.min.js"></script>
 
     <script data-no-instant>

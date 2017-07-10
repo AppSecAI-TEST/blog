@@ -79,4 +79,28 @@ public class MyDateUtils {
     }
 
 
+    public static String getDateBeforeNow(Date date) {
+        if (null == date) {
+            date = new Date(5000L);
+        }
+        String result = "a moment ago";
+        //
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+        String[] dateNow = sdf.format(new Date()).split("-");
+        String[] dateCompareTo = sdf.format(date).split("-");
+        String[] desc = new String[]{"%s years ago", "%s months ago", "%s days ago", "%s hours ago", "%s minutes ago"};
+        for (int i = 0; i < dateNow.length; i++) {
+            if (i > desc.length - 1 ) {
+                break;
+            }
+            int diff = Integer.valueOf(dateNow[i]) - Integer.valueOf(dateCompareTo[i]);
+            if (diff != 0) {
+                result = String.format(desc[i], diff + "");
+                break;
+            }
+        }
+        return result;
+    }
+
+
 }
