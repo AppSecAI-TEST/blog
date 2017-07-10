@@ -22,15 +22,7 @@ import org.springframework.stereotype.Service;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**
- * 自定义开始 自定义结束
- * 自定义结束
- * 自定义结束
- * 自定义结束
- * 自定义结束
- * 自定义结束
- * 自定义结束
- */
+/**自定义开始 */
 
 /**自定义结束 */
 
@@ -202,28 +194,43 @@ public class PostService extends BaseService<PostDomain, Long> {
 
     /**
      * 归档，可指定分类，标签
-     * @param categoryCode
+     * @param category
      * @param tag
      * @return
      */
-    public BaseResponse<Map<String, List<PostDomain>>> getArchiveList(String categoryCode, String tag) {
+    public BaseResponse<Map<String, List<PostDomain>>> getArchiveList(String category, String tag) {
         try {
+            if (StringUtils.isNotBlank(category) && StringUtils.isNotBlank(tag)) {
+                throw new RuntimeException("不能同时指定分类和标签");
+            }
             Map<String, List<PostDomain>> data = new HashMap<String, List<PostDomain>>();
             PostDomain query0 = new PostDomain();
             query0.setOrderField("created_time").setOrderFieldType("DESC").setPostType(EmPostPostType.WENZHANG.value()).setStatus(EmPostStatus.YI_FABU.value());
+            List<String> ids = new ArrayList<String>();
+            // 标签对应文章id
             if (StringUtils.isNotBlank(tag)) {
                 DictDomain dictDomain = dictManager.getDictByTypeAndKey(EmDictDictType.BIAOQIAN.value(), tag);
                 RelationDomain query1 = new RelationDomain();
-                // query1.setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setChildId(dictDomain.getId());
+                query1.setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value());
+                query1.setChildId(dictDomain.getId() + "");
                 List<RelationDomain> relationDomainList = relationService.selectList(query1);
-                if (relationDomainList.isEmpty()) {
-                    return new BaseResponse<Map<String, List<PostDomain>>>(true, "成功", data);
-                }
-                List<String> ids = new ArrayList<String>();
                 for (RelationDomain relationDomain : relationDomainList) {
                     ids.add(relationDomain.getParentId() + "");
                 }
-                query0.getExtendMap().put("idIn", ids);
+            }
+            // 分类对应文章id
+            if (StringUtils.isNotBlank(category)) {
+                DictDomain dictDomain = dictManager.getDictByTypeAndKey(EmDictDictType.FENLEI.value(), category);
+                RelationDomain query2 = new RelationDomain();
+                query2.setType(EmRelationType.WEN_ZHANG_FENLEI.value());
+                query2.setChildId(dictDomain.getId() + "");
+                List<RelationDomain> relationDomainList = relationService.selectList(query2);
+                for (RelationDomain relationDomain : relationDomainList) {
+                    ids.add(relationDomain.getParentId() + "");
+                }
+            }
+            if(null != ids && !ids.isEmpty()){
+                query0.put("idIn", ids);
             }
             List<PostDomain> contentDomainList = contentManager.selectList(query0);
             for (PostDomain post : contentDomainList) {
@@ -235,7 +242,7 @@ public class PostService extends BaseService<PostDomain, Long> {
             }
             return new BaseResponse<Map<String, List<PostDomain>>>(true, "成功", data);
         } catch (Exception e) {
-            logger.error("查询归档异常, categoryCode: " + categoryCode + ", tag: " + tag, e);
+            logger.error("查询归档异常, categoryCode: " + category + ", tag: " + tag, e);
             return new BaseResponse<Map<String, List<PostDomain>>>(false, e.getMessage(), null);
         }
     }

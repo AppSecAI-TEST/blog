@@ -35,20 +35,15 @@ public class TagsController extends BaseController {
 
     @RequestMapping(value = "/{tag}")
     public String index(@PathVariable String tag, Model view) {
-        try {
-            if (StringUtils.isBlank(tag)) {
-                return redirectIndex();
-            }
-            BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, tag);
-            if (result.isSuccess()) {
-                view.addAttribute("archiveMapList", result.getBody());
-                view.addAttribute("classify", tag);
-                return baseDir + "/archives" ;
-            }
-            return redirectIndex();
-        } catch (Exception e) {
-            logger.error("标签列表异常, " + tag, e);
+        if (StringUtils.isBlank(tag)) {
             return redirectIndex();
         }
+        BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, tag);
+        if (result.isSuccess()) {
+            view.addAttribute("archiveMapList", result.getBody());
+            view.addAttribute("classify", tag);
+            return baseDir + "/archives";
+        }
+        return null;
     }
 }

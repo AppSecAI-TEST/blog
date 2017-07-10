@@ -35,21 +35,16 @@ public class CategoryController extends BaseController {
     private PostService postService;
 
     @RequestMapping(value = "/{category}")
-    public String show(@PathVariable String category, Model view){
-        try{
-            if(StringUtils.isBlank(category)){
-                return redirectIndex();
-            }
-            BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(category, null);
-            if(result.isSuccess()){
-                view.addAttribute("archiveMapList", result.getBody());
-                view.addAttribute("classify", category);
-                return baseDir + "/archives";
-            }
-            return redirectIndex();
-        }catch (Exception e){
-            logger.error("分类列表异常, " + category, e);
+    public String show(@PathVariable String category, Model view) {
+        if (StringUtils.isBlank(category)) {
             return redirectIndex();
         }
+        BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(category, null);
+        if (result.isSuccess()) {
+            view.addAttribute("archiveMapList", result.getBody());
+            view.addAttribute("classify", category);
+            return baseDir + "/archives";
+        }
+        return null;
     }
 }

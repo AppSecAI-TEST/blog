@@ -139,17 +139,16 @@ div.body .quote {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 75ch;
+    max-width: 75ch
 }
 div.content .body {
     word-wrap: break-word;
-    max-width: 75ch;
+    max-width: 75ch
 }
 
 .quote p, .quote div {
-    margin-bottom: 0em;
+    margin-bottom: 0em
 }
-
 .submit {
     display: block;
     margin: 0 auto;

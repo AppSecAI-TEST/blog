@@ -34,17 +34,12 @@ public class ArchivesController extends BaseController {
 
     @RequestMapping
     public String index(Model view) {
-        try {
-            BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, null);
-            if (result.isSuccess()) {
-                view.addAttribute("archiveMapList", result.getBody());
-                return baseDir + "/archives" ;
-            }
-            return redirectIndex();
-        } catch (Exception e) {
-            logger.error("归档列表异常", e);
-            return redirectIndex();
+        BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, null);
+        if (result.isSuccess()) {
+            view.addAttribute("archiveMapList", result.getBody());
+            return baseDir + "/archives";
         }
+        return null;
     }
 
 
