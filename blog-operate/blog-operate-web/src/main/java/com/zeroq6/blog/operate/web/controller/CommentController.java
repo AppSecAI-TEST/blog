@@ -1,6 +1,5 @@
 package com.zeroq6.blog.operate.web.controller;
 
-import com.alibaba.fastjson.JSON;
 import com.zeroq6.blog.common.base.BaseController;
 import com.zeroq6.blog.common.domain.CommentDomain;
 import com.zeroq6.blog.common.domain.PostDomain;
@@ -25,10 +24,10 @@ import javax.servlet.http.HttpServletRequest;
 public class CommentController extends BaseController {
 
 
-    private final String postUri = "/post/show/%s" ;
+    private final String postUri = "/post/show/%s";
 
 
-    private final String guestBookUri = "/guestbook" ;
+    private final String guestBookUri = "/guestbook";
 
 
     @Autowired
@@ -39,42 +38,37 @@ public class CommentController extends BaseController {
 
     @RequestMapping(value = "/post")
     public String post(CommentDomain commentDomain, HttpServletRequest request, Model view) {
-        try {
-            String userAgent = request.getHeader("user-agent");
-            if (StringUtils.isBlank(userAgent)) {
-                return redirect(commentDomain);
-            }
-            String referer = request.getHeader("referer");
-            if (StringUtils.isBlank(referer)) {
-                return redirect(commentDomain);
-            }
-            commentDomain.setIp(MyWebUtils.getClientIp(request));
-            commentDomain.setUserAgent(userAgent);
-            BaseResponse<String> result = commentService.post(commentDomain);
-            if (result.isSuccess()) {
-                return redirect(commentDomain) + "#c" + commentDomain.getId();
-            }
+        String userAgent = request.getHeader("user-agent");
+        if (StringUtils.isBlank(userAgent)) {
             return redirect(commentDomain);
-        } catch (Exception e) {
-            logger.error("提交评论异常, " + JSON.toJSONString(commentDomain), e);
-            return redirectIndex();
         }
+        String referer = request.getHeader("referer");
+        if (StringUtils.isBlank(referer)) {
+            return redirect(commentDomain);
+        }
+        commentDomain.setIp(MyWebUtils.getClientIp(request));
+        commentDomain.setUserAgent(userAgent);
+        BaseResponse<String> result = commentService.post(commentDomain);
+        if (result.isSuccess()) {
+            return redirect(commentDomain) + "#c" + commentDomain.getId();
+        }
+        return null;
     }
 
     private String redirect(CommentDomain commentDomain) {
         if (null == commentDomain || null == commentDomain.getPostId()) {
-            return redirectIndex() ;
+            return redirectIndex();
         }
         PostDomain postDomain = postService.selectOne(new PostDomain().setId(commentDomain.getPostId()), true);
         if (null == postDomain) {
-            return redirectIndex() ;
+            return redirectIndex();
         }
         if (postDomain.getPostType() == EmPostPostType.WENZHANG.value()) {
             return "redirect:" + String.format(postUri, postDomain.getId() + "");
         } else if (postDomain.getPostType() == EmPostPostType.LIUYAN.value()) {
             return "redirect:" + guestBookUri;
         } else {
-            return redirectIndex() ;
+            return redirectIndex();
         }
     }
 

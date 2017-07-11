@@ -15,10 +15,10 @@
                                     <div class="body">
 #if($!{item.extendMap.commentParent})
                                         <div class='quote'>
-                                            <a href='#c$!{item.extendMap.commentParent.id}'>$!{item.extendMap.commentParent.username} said:</a><br />$!{item.extendMap.commentParent.content}
+                                            <a href='#c$!{item.extendMap.commentParent.id}'>$!{item.extendMap.commentParent.username} said:</a><br />$!{item.extendMap.commentParent.content.replaceAll("\n", "<br />")}
                                         </div>
 #end
-                                        $!{item.content}
+                                        $!{item.content.replaceAll("\n", "<br />")}
                                     </div>
                                     <div class="post-footer" style="clear: left;">
                                         <ul class="flat-list pipe-list">

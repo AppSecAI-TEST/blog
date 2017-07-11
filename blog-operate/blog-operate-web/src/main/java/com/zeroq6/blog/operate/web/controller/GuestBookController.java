@@ -16,7 +16,7 @@ import java.util.Map;
  */
 @Controller
 @RequestMapping("/guestbook")
-public class GuestBookController extends BaseController{
+public class GuestBookController extends BaseController {
 
     @Autowired
     private PostService postService;
@@ -30,18 +30,13 @@ public class GuestBookController extends BaseController{
 
 
     @RequestMapping
-    public String index(Model view){
-        try {
-            BaseResponse<Map<String, Object>> result = postService.getGuestBook();
-            if(result.isSuccess()){
-                view.addAllAttributes(result.getBody());
-                return baseDir + "/guestbook";
-            }
-            return redirectIndex();
-        } catch (Exception e) {
-            logger.error("查看留言异常", e);
-            return redirectIndex();
+    public String index(Model view) {
+        BaseResponse<Map<String, Object>> result = postService.getGuestBook();
+        if (result.isSuccess()) {
+            view.addAllAttributes(result.getBody());
+            return baseDir + "/guestbook";
         }
+        return null;
     }
 
 }

@@ -3,7 +3,7 @@
     <meta content="yes" name="apple-mobile-web-app-capable">
     <meta content="black-translucent" name="apple-mobile-web-app-status-bar-style">
     <meta content="telephone=no" name="format-detection">
-    <meta name="description" content="clear | 今様，素晴">
+    <meta name="description" content="title | subtitle">
     <meta name="google-site-verification" content="6GTeiOhqimfTtuUIQtS8CqdXJzM4lPPMeXjbvNAsm5w">
     <title>#if($!{title})$!{title} |#end clear</title>
     <link rel="stylesheet" type="text/css" href="/static/default/css/style.css?v=2.0.1">

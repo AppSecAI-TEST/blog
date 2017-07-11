@@ -136,9 +136,7 @@ div.body .quote {
     padding: 1em;
     border: 1px solid #666;
     background: rgba(252, 249, 249, 0.5);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    word-wrap: break-word;
     max-width: 75ch
 }
 div.content .body {
