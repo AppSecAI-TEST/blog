@@ -59,7 +59,7 @@ public class PostManager extends BaseManager<PostDomain, Long> {
         return tags;
     }
 
-    public DictDomain getCategory(Long id){
+    public DictDomain getCategoryById(Long id){
         Assert.notNull(id, "id不能为空");
         RelationDomain relationCategory = relationManager.selectOne(new RelationDomain().setType(EmRelationType.WEN_ZHANG_FENLEI.value()).setParentId(id + ""));
         DictDomain category = dictManager.selectByKey(Long.valueOf(relationCategory.getChildId()));

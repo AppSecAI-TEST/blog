@@ -46,7 +46,7 @@ public class AtomManager implements InitializingBean {
     public void genAtomXml() {
         logger.info("开始生成atom.xml");
         try {
-            List<DictDomain> list = dictManager.getDictByTypeList(Arrays.asList(EmDictDictType.ZHANDIAN_XINXI.value(), EmDictDictType.DING_YUE.value()));
+            List<DictDomain> list = dictManager.getDictByTypeList(Arrays.asList(EmDictDictType.ZHANDIAN_XINXI.value()));
             Map<String, String> dataMap = dictManager.transferMap(list);
             //
             VelocityContext vc = new VelocityContext(dataMap);
@@ -58,17 +58,17 @@ public class AtomManager implements InitializingBean {
             List<PostDomain> postDomainList = postManager.selectList(query);
             for (PostDomain item : postDomainList) {
                 Map<String, Object> extendMap = item.getExtendMap();
-                extendMap.put("url", "/post/show/" + item.getId());
+                extendMap.put("url", dataMap.get("postUrlPrefix") + "/" + item.getId());
                 extendMap.put("published", sdf.format(item.getCreatedTime()));
                 extendMap.put("updated", sdf.format(item.getModifiedTime()));
                 extendMap.put("tags", postManager.getTagsById(item.getId()));
-                extendMap.put("category", postManager.getCategory(item.getId()));
+                extendMap.put("category", postManager.getCategoryById(item.getId()));
                 //
                 String content = MarkdownUtils.parse(item.getContent());
                 extendMap.put("content", content);
                 //
                 String summary = Jsoup.parse(content).text();
-                if(summary.length() > 200){
+                if (summary.length() > 200) {
                     summary = summary.substring(0, 200) + "...";
                 }
                 extendMap.put("summary", summary);

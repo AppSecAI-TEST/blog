@@ -18,7 +18,6 @@ import com.zeroq6.common.utils.MyDateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -169,7 +168,7 @@ public class PostService extends BaseService<PostDomain, Long> {
                 dataMap.put("tags", postManager.getTagsById(id));
 
                 // 分类
-                dataMap.put("category", postManager.getCategory(id));
+                dataMap.put("category", postManager.getCategoryById(id));
 
                 // 上一篇，下一篇
                 PostDomain prev = contentDao.selectPrevPost(post.getId());
