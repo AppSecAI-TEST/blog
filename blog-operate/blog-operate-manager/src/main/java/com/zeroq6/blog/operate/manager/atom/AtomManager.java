@@ -9,6 +9,7 @@ import com.zeroq6.blog.operate.manager.DictManager;
 import com.zeroq6.blog.operate.manager.PostManager;
 import com.zeroq6.blog.operate.manager.velocity.VelocityManager;
 import com.zeroq6.common.utils.MarkdownUtils;
+import com.zeroq6.common.utils.MyStringUtils;
 import org.apache.velocity.VelocityContext;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
@@ -68,10 +69,7 @@ public class AtomManager implements InitializingBean {
                 extendMap.put("content", content);
                 //
                 String summary = Jsoup.parse(content).text();
-                if (summary.length() > 200) {
-                    summary = summary.substring(0, 200) + "...";
-                }
-                extendMap.put("summary", summary);
+                extendMap.put("summary", MyStringUtils.substring(summary, 200));
             }
             vc.put("postDomainList", postDomainList);
             String desPath = velocityManager.getResourceRootPath() + "/" + "atom.xml";

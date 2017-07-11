@@ -3,7 +3,7 @@
                     <h2 class="post-title"><a href="/post/show/${item.id}">${item.title}</a></h2>
                     <div class="post-meta">$DateUtils.format($item.createdTime ,'yyyy年MM月dd日')</div>
                     <div class="post-content">
-                        $MyStringUtils.substring(${item.content})
+                        ${item.extendMap.contentSummary}
                     </div>
                     <p class="readmore"><a href="/post/show/${item.id}">阅读更多</a></p>
                 </div>

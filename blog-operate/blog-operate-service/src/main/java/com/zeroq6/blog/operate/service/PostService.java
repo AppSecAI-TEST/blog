@@ -15,7 +15,9 @@ import com.zeroq6.common.base.Page;
 import com.zeroq6.common.utils.GravatarUtils;
 import com.zeroq6.common.utils.MarkdownUtils;
 import com.zeroq6.common.utils.MyDateUtils;
+import com.zeroq6.common.utils.MyStringUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -126,6 +128,9 @@ public class PostService extends BaseService<PostDomain, Long> {
             contentDomain.setStatus(EmPostStatus.YI_FABU.value());
             Page<PostDomain> p = new Page<PostDomain>(currentPage, 8);
             this.selectPage(contentDomain, p);
+            for(PostDomain postDomain : p.getData()){
+                postDomain.getExtendMap().put("contentSummary", MyStringUtils.substring(Jsoup.parse(MarkdownUtils.parse(postDomain.getContent())).text(), 200));
+            }
             return new BaseResponse<Page<PostDomain>>(true, "成功", p);
         } catch (Exception e) {
             logger.error("查询文章列表异常, page: " + page, e);
