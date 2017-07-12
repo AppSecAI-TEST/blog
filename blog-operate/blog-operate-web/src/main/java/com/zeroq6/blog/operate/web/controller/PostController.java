@@ -39,7 +39,7 @@ public class PostController extends BaseController {
         BaseResponse<Page<PostDomain>> result = postService.index(page);
         if (result.isSuccess()) {
             view.addAttribute("page", result.getBody());
-            return baseDir + "/index";
+            return "/index";
         }
         return null;
 
@@ -50,7 +50,7 @@ public class PostController extends BaseController {
         BaseResponse<Map<String, Object>> result = postService.show(id, EmPostPostType.WENZHANG.value());
         if (result.isSuccess()) {
             view.addAllAttributes(result.getBody());
-            return baseDir + "/post";
+            return "/post";
         }
         return null;
     }

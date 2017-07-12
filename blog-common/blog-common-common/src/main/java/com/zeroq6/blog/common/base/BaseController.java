@@ -21,8 +21,6 @@ public abstract class BaseController {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
-    protected String baseDir = "themes/default";
-
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Date.class, new CustomDateEditor(true));

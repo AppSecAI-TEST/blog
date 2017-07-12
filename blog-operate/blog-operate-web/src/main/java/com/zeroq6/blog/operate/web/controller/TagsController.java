@@ -42,7 +42,7 @@ public class TagsController extends BaseController {
         if (result.isSuccess()) {
             view.addAttribute("archiveMapList", result.getBody());
             view.addAttribute("classify", tag);
-            return baseDir + "/archives";
+            return "/archives";
         }
         return null;
     }

@@ -37,7 +37,7 @@ public class ArchivesController extends BaseController {
         BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, null);
         if (result.isSuccess()) {
             view.addAttribute("archiveMapList", result.getBody());
-            return baseDir + "/archives";
+            return "/archives";
         }
         return null;
     }

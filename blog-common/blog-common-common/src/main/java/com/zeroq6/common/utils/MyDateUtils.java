@@ -26,14 +26,14 @@ public class MyDateUtils {
     }
 
     public static String format(Date date) {
-        if(null == date){
+        if (null == date) {
             return null;
         }
         return yyyyMMddHHmmss(date);
     }
 
     public static String format(Date date, String pattern) {
-        if(null == date){
+        if (null == date) {
             return null;
         }
         return new SimpleDateFormat(pattern, Locale.US).format(date);
@@ -86,14 +86,15 @@ public class MyDateUtils {
         String result = "a moment ago";
         //
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
-        String[] dateNow = sdf.format(new Date()).split("-");
-        String[] dateCompareTo = sdf.format(date).split("-");
+        String[] dateDiff = sdf.format(new Date(new Date().getTime() - date.getTime())).split("-");
+        int[] dateBase = {1970, 1, 1, 8, 0, 0};
         String[] desc = new String[]{"%s years ago", "%s months ago", "%s days ago", "%s hours ago", "%s minutes ago"};
-        for (int i = 0; i < dateNow.length; i++) {
-            if (i > desc.length - 1 ) {
+        for (int i = 0; i < dateDiff.length; i++) {
+            if (i > desc.length - 1) {
                 break;
             }
-            int diff = Integer.valueOf(dateNow[i]) - Integer.valueOf(dateCompareTo[i]);
+            int diff = Integer.valueOf(dateDiff[i]);
+            diff -= dateBase[i];
             if (diff != 0) {
                 result = String.format(desc[i], diff + "");
                 break;

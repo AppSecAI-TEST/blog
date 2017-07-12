@@ -1,0 +1,132 @@
+#set($layout = 'admin/layout/layout.vm')
+                <link href="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.css" rel="stylesheet">
+                <style>
+                    #dropzone {
+                        margin-bottom: 3rem;
+                    }
+                    .dropzone {
+                        border: 2px dashed #0087F7;
+                        border-radius: 5px;
+                        background: white;
+                    }
+                    .dropzone .dz-message {
+                        font-weight: 400;
+                    }
+                    .dropzone .dz-message .note {
+                        font-size: 0.8em;
+                        font-weight: 200;
+                        display: block;
+                        margin-top: 1.4rem;
+                    }
+                    .attach-img {
+                        width: 100px;
+                        height: 100px;
+                        border-radius: 10px;
+                        box-shadow: 0px 0px 8px #333;
+                    }
+                    .attach-text {
+                        font-size: 12px;
+                        font-weight: 300;
+                    }
+                    .attach-img:hover {
+                        background-color: #f9f9f9;
+                    }
+                </style>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">文件管理</h4>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 portlets">
+                            <!-- Your awesome content goes here -->
+                            <div class="m-b-30">
+                                <form action="#" class="dropzone dz-clickable" id="dropzone">
+
+                                    <div class="dz-message">
+                                        <p>将文件拖至此处或点击上传.http://127.0.0.1:9000</p>
+                                        <p>
+                                            <span style="font-size: 16px; color: #d0d0d0;">一次最多可以上传10个文件</span>
+                                        </p>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 attach">
+
+                        <div class="col-md-2 text-center m-t-10">
+                            <a href="http://127.0.0.1:9000/upload/2017/05/1eo90q2mqmg8hp3kd4r7dq97b5.jpg" target="_blank">
+                                <img class="attach-img" src=" http://127.0.0.1:9000/upload/2017/05/1eo90q2mqmg8hp3kd4r7dq97b5.jpg " title="d30d49c0cc9e11e484918d514d8d92f3.jpg">
+                            </a>
+                            <div class="clearfix m-t-10">
+                                <span class="attach-text" data-toggle="tooltip" data-placement="top" data-original-title="d30d49c0cc9e11e484918d514d8d92f3.jpg">d30d49c0cc9e</span>
+                            </div>
+                            <div class="clearfix">
+                                <button url="http://127.0.0.1:9000/upload/2017/05/1eo90q2mqmg8hp3kd4r7dq97b5.jpg" type="button" class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
+                                    <i class="fa fa-copy"></i> <span>复制</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-t-5" onclick="delAttach(4);">
+                                    <i class="fa fa-trash-o"></i> <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center m-t-10">
+                            <a href="http://127.0.0.1:9000/upload/2017/05/1tus3mf93iivuqgcub7hs8fkds.jpg" target="_blank">
+                                <img class="attach-img" src=" http://127.0.0.1:9000/upload/2017/05/1tus3mf93iivuqgcub7hs8fkds.jpg " title="d30d49c0cc9e11e484918d514d8d92f3.jpg">
+                            </a>
+                            <div class="clearfix m-t-10">
+                                <span class="attach-text" data-toggle="tooltip" data-placement="top" data-original-title="d30d49c0cc9e11e484918d514d8d92f3.jpg">d30d49c0cc9e</span>
+                            </div>
+                            <div class="clearfix">
+                                <button url="http://127.0.0.1:9000/upload/2017/05/1tus3mf93iivuqgcub7hs8fkds.jpg" type="button" class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
+                                    <i class="fa fa-copy"></i> <span>复制</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-t-5" onclick="delAttach(3);">
+                                    <i class="fa fa-trash-o"></i> <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center m-t-10">
+                            <a href="http://127.0.0.1:9000/upload/2017/05/vt5p6co4p4geiq19tgm7q2un2g.jpg" target="_blank">
+                                <img class="attach-img" src=" http://127.0.0.1:9000/upload/2017/05/vt5p6co4p4geiq19tgm7q2un2g.jpg " title="005utaZily1ffla1kmeasj33v92kye87.jpg">
+                            </a>
+                            <div class="clearfix m-t-10">
+                                <span class="attach-text" data-toggle="tooltip" data-placement="top" data-original-title="005utaZily1ffla1kmeasj33v92kye87.jpg">005utaZily1f</span>
+                            </div>
+                            <div class="clearfix">
+                                <button url="http://127.0.0.1:9000/upload/2017/05/vt5p6co4p4geiq19tgm7q2un2g.jpg" type="button" class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
+                                    <i class="fa fa-copy"></i> <span>复制</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-t-5" onclick="delAttach(2);">
+                                    <i class="fa fa-trash-o"></i> <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-2 text-center m-t-10">
+                            <a href="http://127.0.0.1:9000/upload/2017/05/r8k13trpheiviqinre6n92cd41.jpeg" target="_blank">
+                                <img class="attach-img" src=" http://127.0.0.1:9000/upload/2017/05/r8k13trpheiviqinre6n92cd41.jpeg " title="53f1ee300449a.jpeg">
+                            </a>
+                            <div class="clearfix m-t-10">
+                                <span class="attach-text" data-toggle="tooltip" data-placement="top" data-original-title="53f1ee300449a.jpeg">53f1ee300449</span>
+                            </div>
+                            <div class="clearfix">
+                                <button url="http://127.0.0.1:9000/upload/2017/05/r8k13trpheiviqinre6n92cd41.jpeg" type="button" class="btn btn-warning btn-sm waves-effect waves-light m-t-5 copy">
+                                    <i class="fa fa-copy"></i> <span>复制</span>
+                                </button>
+                                <button type="button" class="btn btn-danger btn-sm waves-effect waves-light m-t-5" onclick="delAttach(1);">
+                                    <i class="fa fa-trash-o"></i> <span>删除</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                <ul class="pagination m-b-5 pull-right">
+
+                    <li class="active"><a href="?page=1">1</a></li>
+
+                    <li><span>共1页</span></li>
+                </ul>
+                    </div>
+                </div>
+                <script src="//cdn.bootcss.com/dropzone/4.3.0/min/dropzone.min.js"></script>
+                <script src="//cdn.bootcss.com/clipboard.js/1.6.0/clipboard.min.js"></script>
+

@@ -43,7 +43,7 @@ public class CategoryController extends BaseController {
         if (result.isSuccess()) {
             view.addAttribute("archiveMapList", result.getBody());
             view.addAttribute("classify", category);
-            return baseDir + "/archives";
+            return "/archives";
         }
         return null;
     }

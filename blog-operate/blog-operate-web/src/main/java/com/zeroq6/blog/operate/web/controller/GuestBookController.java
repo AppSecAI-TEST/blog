@@ -34,7 +34,7 @@ public class GuestBookController extends BaseController {
         BaseResponse<Map<String, Object>> result = postService.getGuestBook();
         if (result.isSuccess()) {
             view.addAllAttributes(result.getBody());
-            return baseDir + "/guestbook";
+            return "/guestbook";
         }
         return null;
     }

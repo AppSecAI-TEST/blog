@@ -43,7 +43,7 @@ public class HistoryController extends BaseController{
         BaseResponse<List<DictDomain>> result = dictService.getHistory();
         if(result.isSuccess()){
             view.addAttribute("historyList", result.getBody());
-            return baseDir + "/history";
+            return "/history";
         }
         return null;
 

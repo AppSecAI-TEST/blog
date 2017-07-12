@@ -41,7 +41,7 @@ public class AboutController extends BaseController {
         BaseResponse<Map<String, String>> result = dictService.getAboutInfo();
         if (result.isSuccess()) {
             view.addAllAttributes(result.getBody());
-            return baseDir + "/about";
+            return "/about";
         }
         return null;
 

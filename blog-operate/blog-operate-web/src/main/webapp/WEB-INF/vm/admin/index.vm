@@ -1,0 +1,145 @@
+#set($layout = 'admin/layout/layout.vm')
+                <div class="row">
+                    <div class="col-sm-12">
+                        <h4 class="page-title">Tale仪表盘</h4>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bx-shadow bg-info">
+                                <span class="mini-stat-icon"><i class="fa fa-quote-right" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    发表了<span class="counter">2</span>篇文章
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-purple bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-comments-o" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    收到了<span class="counter">6</span>条留言
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-success bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-cloud-upload" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    上传了<span class="counter">4</span>个附件
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-lg-3">
+                            <div class="mini-stat clearfix bg-primary bx-shadow">
+                                <span class="mini-stat-icon"><i class="fa fa-link" aria-hidden="true"></i></span>
+                                <div class="mini-stat-info text-right">
+                                    友链了<span class="counter">2</span>个好友
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">最新文章</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <span class="badge badge-primary" title="0条评论">0</span>
+                                            <a target="_blank" href="http://127.0.0.1:9000/article/5">ddddddddddd</a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span class="badge badge-primary" title="4条评论">4</span>
+                                            <a target="_blank" href="http://127.0.0.1:9000/article/3">dsfdfssdfsdfdsfsdfsdf</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">最新留言</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <a href="http://www.sohu.com" target="_blank">zzzz</a>
+                                            于05月18日17:42 ：<a href="http://127.0.0.1:9000/article/3#comments" target="_blank"><p>zzzzzzzzzzzzzzzz</p>
+                                        </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="http://www.baidu.com" target="_blank">231231231231</a>
+                                            于05月18日17:38 ：<a href="http://127.0.0.1:9000/article/3#comments" target="_blank"><p>21312312312312</p>
+                                        </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="http://weibo.com/ajaxlogin.php?frsdfdsfsdfsdackUrlCallBack=1" target="_blank">9999999999</a>
+                                            于05月18日17:37 ：<a href="http://127.0.0.1:9000/article/3#comments" target="_blank"><p>fdsffffffffffffff</p>
+                                        </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="http://weibo.com/ajaxlogin.php?framelogin=1&amp;callback=parent.sinaSSOController.feedBackUrlCallBack" target="_blank">11111</a>
+                                            于05月18日11:45 ：<a href="http://127.0.0.1:9000/article/3#comments" target="_blank"><p>&lt;&gt;alert(1)&lt;/&gt;</p>
+                                        </a>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <a href="http://weibo.com/ajaxlogin.php?framelogin=1&amp;callback=parent.sinaSSOController.feedBackUrlCallBack" target="_blank">11111</a>
+                                            于05月16日17:35 ：<a href="http://127.0.0.1:9000/article/1#comments" target="_blank"><p>按时发放的</p>
+                                        </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    <h4 class="panel-title">系统日志</h4>
+                                </div>
+                                <div class="panel-body">
+                                    <ul class="list-group">
+                                        <li class="list-group-item">
+                                            <span>2017-07-12 14:27:18 =&gt; 登录后台</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-07-12 10:56:55 =&gt; 登录后台</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-07-11 16:02:43 =&gt; 登录后台</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-07-11 16:02:32 =&gt; 初始化站点</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-06-01 14:31:45 =&gt; 登录后台</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 18:12:41 =&gt; 重启系统</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 18:12:26 =&gt; 重启系统</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 16:13:55 =&gt; 系统备份</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 16:04:09 =&gt; 主题设置</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 15:59:23 =&gt; 登录后台</span>
+                                        </li>
+                                        <li class="list-group-item">
+                                            <span>2017-05-16 15:59:08 =&gt; 初始化站点</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
