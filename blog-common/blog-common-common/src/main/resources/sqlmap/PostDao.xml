@@ -15,8 +15,6 @@
             t.content AS content, /*内容*/
             t.post_type AS postType, /*文章类型，1，文章，2，留言*/
             t.status AS status, /*状态，1，未发布，2，已发布*/
-            t.comment_count AS commentCount, /*评论次数*/
-            t.view_count AS viewCount, /*查看次数*/
             t.remark AS remark, /*备注*/
             t.modified_time AS modifiedTime, /*修改时间*/
             t.created_time AS createdTime, /*创建时间*/
@@ -43,12 +41,6 @@
         </if>
         <if test="status != null">
             <![CDATA[AND t.status = #{status}]]> /*状态，1，未发布，2，已发布*/
-        </if>
-        <if test="commentCount != null">
-            <![CDATA[AND t.comment_count = #{commentCount}]]> /*评论次数*/
-        </if>
-        <if test="viewCount != null">
-            <![CDATA[AND t.view_count = #{viewCount}]]> /*查看次数*/
         </if>
         <if test="remark != null and remark.trim() != ''">
             <![CDATA[AND t.remark = #{remark}]]> /*备注*/
@@ -132,12 +124,6 @@
         <if test="extendMap.where.status!= null">
             <![CDATA[AND t.status = #{extendMap.where.status}]]> /*状态，1，未发布，2，已发布*/
         </if>
-        <if test="extendMap.where.commentCount!= null">
-            <![CDATA[AND t.comment_count = #{extendMap.where.commentCount}]]> /*评论次数*/
-        </if>
-        <if test="extendMap.where.viewCount!= null">
-            <![CDATA[AND t.view_count = #{extendMap.where.viewCount}]]> /*查看次数*/
-        </if>
         <if test="extendMap.where.remark!= null and extendMap.where.remark.trim() != ''">
             <![CDATA[AND t.remark = #{extendMap.where.remark}]]> /*备注*/
         </if>
@@ -170,12 +156,6 @@
             <if test="status!= null">
                 <![CDATA[ t.status = #{status}]]> /*状态，1，未发布，2，已发布*/,
             </if>
-            <if test="commentCount!= null">
-                <![CDATA[ t.comment_count = #{commentCount}]]> /*评论次数*/,
-            </if>
-            <if test="viewCount!= null">
-                <![CDATA[ t.view_count = #{viewCount}]]> /*查看次数*/,
-            </if>
             <if test="remark!= null and remark.trim() != ''">
                 <![CDATA[ t.remark = #{remark}]]> /*备注*/,
             </if>
@@ -199,9 +179,9 @@
     </sql>
 
 
-    <sql id="INSERT_COLUMN"><if test="title != null and title.trim() != ''">title,</if><if test="username != null and username.trim() != ''">username,</if><if test="content != null and content.trim() != ''">content,</if><if test="postType != null ">post_type,</if><if test="status != null ">status,</if><if test="commentCount != null ">comment_count,</if><if test="viewCount != null ">view_count,</if><if test="remark != null and remark.trim() != ''">remark,</if><if test="modifiedTime != null ">modified_time,</if><if test="createdTime != null ">created_time,</if><if test="yn != null ">yn</if></sql>
+    <sql id="INSERT_COLUMN"><if test="title != null and title.trim() != ''">title,</if><if test="username != null and username.trim() != ''">username,</if><if test="content != null and content.trim() != ''">content,</if><if test="postType != null ">post_type,</if><if test="status != null ">status,</if><if test="remark != null and remark.trim() != ''">remark,</if><if test="modifiedTime != null ">modified_time,</if><if test="createdTime != null ">created_time,</if><if test="yn != null ">yn</if></sql>
 
-    <sql id="INSERT_COLUMN_VALUES"><if test="title != null and title.trim() != ''">#{title},</if><if test="username != null and username.trim() != ''">#{username},</if><if test="content != null and content.trim() != ''">#{content},</if><if test="postType != null ">#{postType},</if><if test="status != null ">#{status},</if><if test="commentCount != null ">#{commentCount},</if><if test="viewCount != null ">#{viewCount},</if><if test="remark != null and remark.trim() != ''">#{remark},</if><if test="modifiedTime != null ">#{modifiedTime},</if><if test="createdTime != null ">#{createdTime},</if><if test="yn != null ">#{yn}</if></sql>
+    <sql id="INSERT_COLUMN_VALUES"><if test="title != null and title.trim() != ''">#{title},</if><if test="username != null and username.trim() != ''">#{username},</if><if test="content != null and content.trim() != ''">#{content},</if><if test="postType != null ">#{postType},</if><if test="status != null ">#{status},</if><if test="remark != null and remark.trim() != ''">#{remark},</if><if test="modifiedTime != null ">#{modifiedTime},</if><if test="createdTime != null ">#{createdTime},</if><if test="yn != null ">#{yn}</if></sql>
 
     <insert id="insert" parameterType="com.zeroq6.blog.common.domain.PostDomain">
         INSERT INTO <include refid="TABLE"/>
@@ -228,11 +208,11 @@
     <insert id="insertBatch" parameterType="java.util.List">
         INSERT INTO <include refid="TABLE"/>
         (
-        title,username,content,post_type,status,comment_count,view_count,remark,modified_time,created_time,yn
+        title,username,content,post_type,status,remark,modified_time,created_time,yn
         )
         VALUES
         <foreach collection="list" index="index" item="item" separator=",">
-            (#{item.title},#{item.username},#{item.content},#{item.postType},#{item.status},#{item.commentCount},#{item.viewCount},#{item.remark},#{item.modifiedTime},#{item.createdTime},#{item.yn})
+            (#{item.title},#{item.username},#{item.content},#{item.postType},#{item.status},#{item.remark},#{item.modifiedTime},#{item.createdTime},#{item.yn})
         </foreach>
 
     </insert>

@@ -37,14 +37,6 @@ public class PostDomain extends BaseDomain<PostDomain> {
      * 状态，1，未发布，2，已发布
      */
     private Integer status;
-    /**
-     * 评论次数
-     */
-    private Integer commentCount;
-    /**
-     * 查看次数
-     */
-    private Integer viewCount;
 
     /**
      * 获取标题 title
@@ -133,42 +125,6 @@ public class PostDomain extends BaseDomain<PostDomain> {
      */
     public PostDomain setStatus(Integer status) {
         this.status = status;
-        return this;
-    }
-
-    /**
-     * 获取评论次数 commentCount
-     *
-     * @return
-     */
-    public Integer getCommentCount() {
-        return commentCount;
-    }
-    /**
-     * 设置评论次数 commentCount
-     *
-     * @param commentCount 评论次数
-     */
-    public PostDomain setCommentCount(Integer commentCount) {
-        this.commentCount = commentCount;
-        return this;
-    }
-
-    /**
-     * 获取查看次数 viewCount
-     *
-     * @return
-     */
-    public Integer getViewCount() {
-        return viewCount;
-    }
-    /**
-     * 设置查看次数 viewCount
-     *
-     * @param viewCount 查看次数
-     */
-    public PostDomain setViewCount(Integer viewCount) {
-        this.viewCount = viewCount;
         return this;
     }
 
