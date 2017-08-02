@@ -167,6 +167,8 @@ public class PostService extends BaseService<PostDomain, Long> {
                     extendMap.put("commentParent", commentService.selectByKey(item.getParentId()));
                 }
             }
+            // 评论数量
+            post.put("commentCount", commentDomainList.size());
             // 只有文章才查询标签，上一篇，下一篇文章
             if (type == EmPostPostType.WENZHANG.value()) {
                 // 标签

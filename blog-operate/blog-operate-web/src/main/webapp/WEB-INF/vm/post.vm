@@ -2,7 +2,7 @@
                 <div class="post">
                     <h1 class="post-title">$!{post.title}</h1>
                     <div class="post-meta">$DateUtils.format($!{post.createdTime}, 'MMM dd, yyyy')<span> | </span><span class="category"><a href="/categories/$!{category.dictKey}">$!{category.dictValue}</a></span></div>
-                    <a href="#comments" class="disqus-comment-count">$!{post.commentCount}条评论</a>
+                    <a href="#comments" class="disqus-comment-count">$!{post.extendMap.commentCount}条评论</a>
                     <div class="post-content">
                         $!{post.extendMap.content}
                     </div>

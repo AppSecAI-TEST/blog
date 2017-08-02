@@ -45,7 +45,6 @@ public class CommentManager extends BaseManager<CommentDomain, Long> {
     @Transactional(value = "tx", rollbackFor = Exception.class)
     public BaseResponse<String> post(CommentDomain commentDomain, PostDomain postDomain) {
         insertFillingId(commentDomain);
-        postManager.updateByCondition(new PostDomain().setCommentCount(postDomain.getCommentCount() + 1), new PostDomain().setId(postDomain.getId()).setCommentCount(postDomain.getCommentCount()), 1);
         return new BaseResponse<String>(true, "成功", commentDomain.getId() + "");
     }
 
