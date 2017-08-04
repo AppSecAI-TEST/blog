@@ -52,3 +52,66 @@
 #end
     </nav>
 #end
+
+#macro(showPageAdmin $page)
+#set($appendingNum = 2)
+#set($prefixAndSuffixNum = 1)
+    <nav aria-label="...">
+        <ul class="pagination">
+#if($page && ${page.totalCount}>0)
+#if($page.hasPreviousPage)
+        <li><a href="javascript:void(0);" onclick="submitPage($!{page.previousPage})" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+#end
+#if($prefixAndSuffixNum >= 1 && $page.currentPage > $prefixAndSuffixNum)
+#foreach($i in [1..$prefixAndSuffixNum])
+        <li><a href="javascript:void(0);" onclick="submitPage($!{i})">$i</a></li>
+#end
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0 && $page.currentPage - 1 > $prefixAndSuffixNum + $appendingNum)
+        <li class="disabled"><a>&hellip;</a></li>
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 1)
+#set($from = $prefixAndSuffixNum + 1)
+#set($to = $page.currentPage - 1)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $page.currentPage - $i <= $appendingNum)
+        <li><a href="javascript:void(0);" onclick="submitPage($!{i})">$i</a></li>
+#end
+#end
+#end
+        <li class="active"><a href="javascript:void(0);">$page.currentPage</a></li>
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 1)
+#set($from = $page.currentPage + 1)
+#set($to = $page.currentPage + $appendingNum)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $i - $page.currentPage <= $appendingNum) ## 距离
+        <li><a href="javascript:void(0);" onclick="submitPage($!{i})">$i</a></li>
+#end
+#end
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0 && $page.pageCount - $page.currentPage > $prefixAndSuffixNum + $appendingNum)
+        <li class="disabled"><a>&hellip;</a></li>
+#end
+#if($prefixAndSuffixNum >= 0 && $appendingNum >= 0)
+#set($from = $page.pageCount - $prefixAndSuffixNum + 1)
+#set($to = $page.pageCount)
+#foreach($i in [$from..$to])
+#if($i >= 0 && $i <= $page.pageCount && $to >= $from && $i > $page.currentPage + $appendingNum)
+        <li><a href="javascript:void(0);" onclick="submitPage($!{i})">$i</a></li>
+#end
+#end
+#end
+#if($page.hasNextPage)
+        <li><a href="javascript:void(0);" onclick="submitPage($!{i})" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+#end
+#else
+#end
+        </ul>
+    </nav>
+#end
+
+
+#macro(emTitle $classSimpleName $value)#set($flag=false)#set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)#if($value == $em.value())#set($flag=true)$em.title()#break#end#end#if($flag == false)#end#end
+#macro(emOption $classSimpleName $value $name)<select id='$name' name='$name' class='form-control' style='width:150px;'> #set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)<option value='$em.value()' #if($value == $em.value()) selected #end>$em.title()</option>#end</select>#end
+#macro(emOptionAll $classSimpleName $value $name)<select id='$name' name='$name' class='form-control' style='width:150px;'> <option value=''>全部</option> #set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)<option value='$em.value()' #if($value == $em.value()) selected #end>$em.title()</option>#end</select>#end
+
