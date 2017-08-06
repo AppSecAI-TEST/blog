@@ -47,7 +47,7 @@ public class PostController extends BaseController {
 
     @RequestMapping(value = "/show/{id}")
     public String show(@PathVariable Long id, Model view) throws Exception {
-        BaseResponse<Map<String, Object>> result = postService.show(id, EmPostPostType.WENZHANG.value());
+        BaseResponse<Map<String, Object>> result = postService.show(id);
         if (result.isSuccess()) {
             view.addAllAttributes(result.getBody());
             return "/post";

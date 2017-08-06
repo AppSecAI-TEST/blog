@@ -78,7 +78,7 @@ public class PostService extends BaseService<PostDomain, Long> {
     public BaseResponse<Map<String, Object>> getGuestBook() {
         try {
             PostDomain postDomain = selectOne(new PostDomain().setPostType(EmPostPostType.LIUYAN.value()));
-            return show(postDomain.getId(), EmPostPostType.LIUYAN.value());
+            return show(postDomain.getId());
         } catch (Exception e) {
             logger.error("查询留言异常", e);
             return new BaseResponse<Map<String, Object>>(false, e.getMessage(), null);
@@ -144,16 +144,13 @@ public class PostService extends BaseService<PostDomain, Long> {
      * @param id
      * @return
      */
-    public BaseResponse<Map<String, Object>> show(Long id, int type) {
+    public BaseResponse<Map<String, Object>> show(Long id) {
         try {
-            if (type != EmPostPostType.LIUYAN.value() && type != EmPostPostType.WENZHANG.value()) {
-                throw new RuntimeException("类型错误, " + type);
-            }
             if (null == id) {
                 throw new RuntimeException("id不能为空, " + id);
             }
             // 文章
-            PostDomain post = this.selectOne(new PostDomain().setId(id).setStatus(EmPostStatus.YI_FABU.value()).setPostType(type));
+            PostDomain post = this.selectOne(new PostDomain().setId(id));
             post.getExtendMap().put("content", MarkdownUtils.parse(post.getContent()));
             Map<String, Object> dataMap = new HashMap<String, Object>();
             // 评论
@@ -170,7 +167,7 @@ public class PostService extends BaseService<PostDomain, Long> {
             // 评论数量
             post.put("commentCount", commentDomainList.size());
             // 只有文章才查询标签，上一篇，下一篇文章
-            if (type == EmPostPostType.WENZHANG.value()) {
+            if (post.getPostType() == EmPostPostType.WENZHANG.value()) {
                 // 标签
                 dataMap.put("tags", postManager.getTagsById(id));
 
