@@ -59,15 +59,17 @@ public class MyStringUtils {
         return sb.toString();
     }
 
-    public static String substring(String text) {
-        return substring(text, 200);
-    }
-
-    public static String substring(String text, int maxNum) {
-        if (null == text) {
-            return null;
+    public static String[] toStringArray(Object obj){
+        if(null == obj){
+            throw new RuntimeException("obj can not be null");
         }
-        return text.length() > maxNum ? text.substring(0, maxNum) + "..." : text;
+        if(obj instanceof String[]){
+            return (String[])obj;
+        }
+        if(obj instanceof String){
+            return new String[]{String.valueOf(obj)};
+        }
+        throw new RuntimeException("obj can not convert to string array");
     }
 
 

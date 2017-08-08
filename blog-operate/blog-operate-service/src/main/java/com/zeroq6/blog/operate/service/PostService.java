@@ -20,11 +20,17 @@ import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.Assert;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-/**自定义开始 */
+/**
+ * 自定义开始 自定义结束
+ * 自定义结束
+ * 自定义结束
+ * 自定义结束
+ */
 
 /**自定义结束 */
 
@@ -36,7 +42,7 @@ import java.util.*;
 public class PostService extends BaseService<PostDomain, Long> {
 
     @Autowired
-    private PostManager contentManager;
+    private PostManager postManager;
 
     /**自定义开始 */
 
@@ -48,14 +54,11 @@ public class PostService extends BaseService<PostDomain, Long> {
     private CommentService commentService;
 
     @Autowired
-    private PostDao contentDao;
+    private PostDao postDao;
 
-    @Autowired
-    private PostManager postManager;
 
     @Autowired
     private RelationService relationService;
-
 
     @Autowired
     private DictManager dictManager;
@@ -66,7 +69,7 @@ public class PostService extends BaseService<PostDomain, Long> {
 
     @Override
     public BaseManager<PostDomain, Long> getManager() {
-        return contentManager;
+        return postManager;
     }
 
 
@@ -99,7 +102,7 @@ public class PostService extends BaseService<PostDomain, Long> {
             query0.setStatus(EmPostStatus.YI_FABU.value());
             query0.setStartIndex(0).setEndIndex(10);
             query0.setOrderField("created_time").setOrderFieldType("DESC");
-            List<PostDomain> sidebarRecentPosts = contentManager.selectList(query0);
+            List<PostDomain> sidebarRecentPosts = postManager.selectList(query0);
             //
             dataMap.put("sidebarCategories", sidebarCategories);
             dataMap.put("sidebarTags", sidebarTags);
@@ -128,8 +131,9 @@ public class PostService extends BaseService<PostDomain, Long> {
             contentDomain.setStatus(EmPostStatus.YI_FABU.value());
             Page<PostDomain> p = new Page<PostDomain>(currentPage, 8);
             this.selectPage(contentDomain, p);
-            for(PostDomain postDomain : p.getData()){
-                postDomain.getExtendMap().put("contentSummary", MyStringUtils.substring(Jsoup.parse(MarkdownUtils.parse(postDomain.getContent())).text(), 200));
+            for (PostDomain postDomain : p.getData()) {
+                String text = Jsoup.parse(MarkdownUtils.parse(postDomain.getContent())).text();
+                postDomain.getExtendMap().put("contentSummary", text.substring(0, text.length() > 200 ? 200 : text.length() - 1) + "...");
             }
             return new BaseResponse<Page<PostDomain>>(true, "成功", p);
         } catch (Exception e) {
@@ -169,14 +173,14 @@ public class PostService extends BaseService<PostDomain, Long> {
             // 只有文章才查询标签，上一篇，下一篇文章
             if (post.getPostType() == EmPostPostType.WENZHANG.value()) {
                 // 标签
-                dataMap.put("tags", postManager.getTagsById(id));
+                dataMap.put("tags", this.getTagsByPostId(id));
 
                 // 分类
-                dataMap.put("category", postManager.getCategoryById(id));
+                dataMap.put("category", this.getCategoryByPostId(id));
 
                 // 上一篇，下一篇
-                PostDomain prev = contentDao.selectPrevPost(post.getId());
-                PostDomain next = contentDao.selectNextPost(post.getId());
+                PostDomain prev = postDao.selectPrevPost(post.getId());
+                PostDomain next = postDao.selectNextPost(post.getId());
                 if (null != prev) {
                     dataMap.put("prev", prev);
                 }
@@ -231,10 +235,10 @@ public class PostService extends BaseService<PostDomain, Long> {
                     ids.add(relationDomain.getParentId() + "");
                 }
             }
-            if(null != ids && !ids.isEmpty()){
+            if (null != ids && !ids.isEmpty()) {
                 query0.put("idIn", ids);
             }
-            List<PostDomain> contentDomainList = contentManager.selectList(query0);
+            List<PostDomain> contentDomainList = postManager.selectList(query0);
             for (PostDomain post : contentDomainList) {
                 String key = yyyy.format(post.getCreatedTime());
                 if (null == data.get(key)) {
@@ -247,6 +251,91 @@ public class PostService extends BaseService<PostDomain, Long> {
             logger.error("查询归档异常, categoryCode: " + category + ", tag: " + tag, e);
             return new BaseResponse<Map<String, List<PostDomain>>>(false, e.getMessage(), null);
         }
+    }
+
+    public BaseResponse<String> addPost(PostDomain postDomain, List<String> tags, String category) {
+        try {
+            if (postDomain.getPostType() == EmPostPostType.WENZHANG.value()) {
+                if (null == tags || tags.isEmpty() || StringUtils.isBlank(category)) {
+                    throw new RuntimeException("新增文章分类和标签不能为空");
+                }
+                // 分类
+                RelationDomain relationDomain = new RelationDomain();
+                relationDomain.setChildId(category);
+                relationDomain.setType(EmRelationType.WEN_ZHANG_FENLEI.value());
+                // 标签
+                List<RelationDomain> tagsList = new ArrayList<RelationDomain>();
+                for (String tag : tags) {
+                    RelationDomain newTag = new RelationDomain();
+                    newTag.setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value());
+                    newTag.setChildId(tag);
+                    tagsList.add(newTag);
+                }
+                postManager.addPost(postDomain, relationDomain, tagsList);
+            } else {
+                postManager.addPost(postDomain, null, null);
+            }
+            return new BaseResponse<String>(true, "成功", null);
+        } catch (Exception e) {
+            logger.error("新增文章异常, ", e);
+            return new BaseResponse<String>(false, e.getMessage(), null);
+        }
+
+    }
+
+    public BaseResponse<String> editPost(PostDomain postDomain, List<String> tags, String category) {
+        try {
+
+            if (postDomain.getPostType() == EmPostPostType.WENZHANG.value()) {
+                // 标签最终写数据
+                List<RelationDomain> addTags = new ArrayList<RelationDomain>();
+                List<RelationDomain> deleteTags = new ArrayList<RelationDomain>();
+                //
+                List<RelationDomain> dbTags = relationService.selectList(new RelationDomain().setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setParentId(postDomain.getId() + ""));
+                for (RelationDomain dbTag : dbTags) {
+                    if (!tags.contains(dbTag.getParentId())) {
+                        deleteTags.add(dbTag);
+                    } else {
+                        // 更新忽略，移除最后剩下需要增加的
+                        tags.remove(dbTag.getParentId());
+                    }
+                }
+                for (String tag : tags) {
+                    RelationDomain tagRelationDomain = new RelationDomain();
+                    tagRelationDomain.setChildId(tag);
+                    tagRelationDomain.setParentId(postDomain.getId() + "");
+                    tagRelationDomain.setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value());
+
+                    addTags.add(tagRelationDomain);
+                }
+                postManager.editPost(postDomain, category, addTags, deleteTags);
+            } else {
+                postManager.editPost(postDomain, null, null, null);
+            }
+            return new BaseResponse<String>(true, "成功", null);
+        } catch (Exception e) {
+            logger.error("编辑文章异常, ", e);
+            return new BaseResponse<String>(false, e.getMessage(), null);
+        }
+
+    }
+
+
+    public List<DictDomain> getTagsByPostId(Long id) {
+        Assert.notNull(id, "id不能为空");
+        List<RelationDomain> relationTagList = relationService.selectList(new RelationDomain().setType(EmRelationType.WEN_ZHANG_BIAOQIAN.value()).setParentId(id + ""));
+        List<DictDomain> tags = new ArrayList<DictDomain>();
+        for (RelationDomain relationTag : relationTagList) {
+            tags.add(dictManager.selectByKey(Long.valueOf(relationTag.getChildId())));
+        }
+        return tags;
+    }
+
+    public DictDomain getCategoryByPostId(Long id) {
+        Assert.notNull(id, "id不能为空");
+        RelationDomain relationCategory = relationService.selectOne(new RelationDomain().setType(EmRelationType.WEN_ZHANG_FENLEI.value()).setParentId(id + ""));
+        DictDomain category = dictManager.selectByKey(Long.valueOf(relationCategory.getChildId()));
+        return category;
     }
 
 

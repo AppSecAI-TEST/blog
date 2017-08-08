@@ -36,11 +36,6 @@ public class CommentService extends BaseService<CommentDomain, Long> {
 
     /**自定义开始 */
 
-    private final String quotePrefix = "[quote]";
-
-    private final String quoteSuffix = "[/quote]";
-
-
     @Autowired
     private PostService postService;
 

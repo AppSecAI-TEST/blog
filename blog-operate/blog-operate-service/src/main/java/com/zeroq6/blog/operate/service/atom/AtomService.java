@@ -1,4 +1,4 @@
-package com.zeroq6.blog.operate.manager.atom;
+package com.zeroq6.blog.operate.service.atom;
 
 import com.zeroq6.blog.common.domain.DictDomain;
 import com.zeroq6.blog.common.domain.PostDomain;
@@ -6,8 +6,8 @@ import com.zeroq6.blog.common.enums.field.EmDictDictType;
 import com.zeroq6.blog.common.enums.field.EmPostPostType;
 import com.zeroq6.blog.common.enums.field.EmPostStatus;
 import com.zeroq6.blog.operate.manager.DictManager;
-import com.zeroq6.blog.operate.manager.PostManager;
 import com.zeroq6.blog.operate.manager.velocity.VelocityManager;
+import com.zeroq6.blog.operate.service.PostService;
 import com.zeroq6.common.utils.MarkdownUtils;
 import com.zeroq6.common.utils.MyStringUtils;
 import org.apache.velocity.VelocityContext;
@@ -26,13 +26,13 @@ import java.util.*;
  */
 
 @Service
-public class AtomManager implements InitializingBean {
+public class AtomService implements InitializingBean {
 
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private PostManager postManager;
+    private PostService postService;
 
     @Autowired
     private DictManager dictManager;
@@ -56,20 +56,20 @@ public class AtomManager implements InitializingBean {
             PostDomain query = new PostDomain();
             query.setPostType(EmPostPostType.WENZHANG.value()).setStatus(EmPostStatus.YI_FABU.value());
             query.setStartIndex(0).setEndIndex(10000);
-            List<PostDomain> postDomainList = postManager.selectList(query);
+            List<PostDomain> postDomainList = postService.selectList(query);
             for (PostDomain item : postDomainList) {
                 Map<String, Object> extendMap = item.getExtendMap();
                 extendMap.put("url", dataMap.get("postUrlPrefix") + "/" + item.getId());
                 extendMap.put("published", sdf.format(item.getCreatedTime()));
                 extendMap.put("updated", sdf.format(item.getModifiedTime()));
-                extendMap.put("tags", postManager.getTagsById(item.getId()));
-                extendMap.put("category", postManager.getCategoryById(item.getId()));
+                extendMap.put("tags", postService.getTagsByPostId(item.getId()));
+                extendMap.put("category", postService.getCategoryByPostId(item.getId()));
                 //
                 String content = MarkdownUtils.parse(item.getContent());
                 extendMap.put("content", content);
                 //
                 String summary = Jsoup.parse(content).text();
-                extendMap.put("summary", MyStringUtils.substring(summary, 200));
+                extendMap.put("summary", summary.substring(0, summary.length() > 200 ? 200 : summary.length() - 1));
             }
             vc.put("postDomainList", postDomainList);
             String desPath = velocityManager.getResourceRootPath() + "/" + "atom.xml";

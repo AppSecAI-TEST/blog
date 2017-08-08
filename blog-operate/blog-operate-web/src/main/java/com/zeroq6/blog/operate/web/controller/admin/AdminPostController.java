@@ -7,6 +7,8 @@ import com.zeroq6.blog.operate.manager.PostManager;
 import com.zeroq6.blog.operate.service.PostService;
 import com.zeroq6.common.base.BaseResponse;
 import com.zeroq6.common.base.Page;
+import com.zeroq6.common.utils.MyStringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -36,7 +41,7 @@ public class AdminPostController {
     private DictManager dictManager;
 
     @RequestMapping("/list")
-    public String list(PostDomain postDomain, Page<PostDomain> page,  Model view){
+    public String list(PostDomain postDomain, Page<PostDomain> page, Model view) {
         page.setPageSize(10);
         postService.selectPage(postDomain, page);
         view.addAttribute("page", page);
@@ -44,12 +49,12 @@ public class AdminPostController {
     }
 
     @RequestMapping("/edit/{id}")
-    public String edit(@PathVariable Long id, Model view){
-        if(id > 0){
+    public String edit(@PathVariable Long id, Model view) {
+        if (id > 0) {
             BaseResponse<Map<String, Object>> response = postService.show(id);
-            if(response.isSuccess()){
+            if (response.isSuccess()) {
                 view.addAllAttributes(response.getBody());
-            }else{
+            } else {
                 throw new RuntimeException(response.getMessage());
             }
         }
@@ -59,20 +64,24 @@ public class AdminPostController {
     }
 
     @RequestMapping("/save")
-    public String save(PostDomain postDomain, Model view){
-        if(postDomain.getId() == 0){
-            postService.insertFillingId(postDomain);
+    public String save(PostDomain postDomain, Model view) {
+        List<String> tags = Arrays.asList(MyStringUtils.toStringArray(postDomain.get("tags")));
+        String category = (String)postDomain.get("category");
+        if(null == postDomain.getId() || postDomain.getId() <= 0L){
+            postService.addPost(postDomain, tags, category);
         }else{
-            postService.updateByKey(postDomain);
+            postService.editPost(postDomain, tags, category);
         }
         return "redirect:/admin/post/list";
     }
 
 
     @RequestMapping("/del/{id}")
-    public String del(@PathVariable Long id, Model view){
+    public String del(@PathVariable Long id, Model view) {
         postManager.deleteById(id);
         return "redirect:/admin/post/list";
     }
+
+
 
 }

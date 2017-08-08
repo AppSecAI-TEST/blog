@@ -77,5 +77,8 @@ public abstract class BaseDomain<T extends BaseDomain> extends BaseQuery<T> {
         return (T)this;
     }
 
+    public Object get(String key) {
+        return getExtendMap().get(key);
+    }
 
 }
