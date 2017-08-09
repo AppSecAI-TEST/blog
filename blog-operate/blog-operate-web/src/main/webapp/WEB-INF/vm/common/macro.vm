@@ -1,3 +1,6 @@
+#*
+* 前台分页
+* *#
 #macro(showPage $page)
 #set($appendingNum = 2)
 #set($prefixAndSuffixNum = 1)
@@ -53,9 +56,14 @@
     </nav>
 #end
 
+#*
+* 后台分页
+* *#
 #macro(showPageAdmin $page)
 #set($appendingNum = 2)
 #set($prefixAndSuffixNum = 1)
+    <input type="hidden" id="currentPage" name="currentPage" value="1">
+    <input type="hidden" id="pageSize" name="pageSize" value="10">
     <nav aria-label="...">
         <ul class="pagination">
 #if($page && ${page.totalCount}>0)
@@ -110,8 +118,24 @@
     </nav>
 #end
 
-
+#*
+* 枚举翻译
+* *#
 #macro(emTitle $classSimpleName $value)#set($flag=false)#set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)#if($value == $em.value())#set($flag=true)$em.title()#break#end#end#if($flag == false)#end#end
+
+#*
+* 下拉框不带全部选项
+* *#
 #macro(emOption $classSimpleName $value $name)<select id='$name' name='$name' class='form-control' style='width:150px;'> #set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)<option value='$em.value()' #if($value == $em.value()) selected #end>$em.title()</option>#end</select>#end
+
+#*
+* 下拉框带全部选项
+* *#
 #macro(emOptionAll $classSimpleName $value $name)<select id='$name' name='$name' class='form-control' style='width:150px;'> <option value=''>全部</option> #set($obj=$EmUtils.values($classSimpleName))#foreach($em in $obj)<option value='$em.value()' #if($value == $em.value()) selected #end>$em.title()</option>#end</select>#end
+
+#*
+* 排序
+* *#
+#macro(sorting $obj $field)#if($obj && $obj.orderField == $field) class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldType" #else class="sorting" data-orderFieldType="DESC" #end data-orderField="$field" #end
+
 

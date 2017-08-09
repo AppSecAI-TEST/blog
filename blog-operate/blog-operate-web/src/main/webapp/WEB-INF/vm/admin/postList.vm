@@ -1,5 +1,6 @@
 #set($layout='admin/layout/empty.vm')
 <div id="page-wrapper">
+    <form id="pageform" action="/admin/post/list" method="post">
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-header">文章管理</h3>
@@ -8,10 +9,8 @@
     </div>
     <div class="row">
         <div class="col-lg-12">
-            <form id="pageForm" action="/admin/post/list" method="post">
-                <input type="hidden" id="currentPage" name="currentPage">
-                <input type="hidden" id="pageSize" name="pageSize" value="10">
-            </form>
+
+
         </div>
         <!-- /.col-lg-12 -->
     </div>
@@ -19,15 +18,48 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
+            <!-- 查询栏开始 -->
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row form-inline">
+                        <div class="col-xs-3 input-group">
+                            <span class="input-group-addon">id</span>
+                            <input type="text" id="id" name="id" value="$!{faeWorkflow.id}"  class="form-control form-cnd" >
+                        </div>
+                        <div class="col-xs-3 input-group">
+                            <span class="input-group-addon">system_id</span>
+                            <input type="text" id="systemId" name="systemId" value="$!{faeWorkflow.systemId}"  class="form-control form-cnd" >
+                        </div>
+                        <div class="col-xs-3 input-group">
+                            <span class="input-group-addon">process_type</span>
+                            <input type="text" id="processType" name="processType" value="$!{faeWorkflow.processType}"  class="form-control form-cnd" >
+                        </div>
+                    </div>
+                    <div class="row space-6"></div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="button" id="query" name="query" class="btn btn-info">
+                                查询
+                            </button>
+                            <button type="button" id="exportCsv" name="exportCsv" class="btn btn-info">
+                                导出
+                            </button>
+                            <button type="button" id="create" name="create" class="btn btn-info">
+                                新增
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
             <table width="100%" class="table table-striped table-bordered table-hover">
                 <thead>
                 <tr>
-                    <th>id</th>
-                    <th>标题</th>
-                    <th>用户名</th>
-                    <th>文章类型</th>
-                    <th>状态</th>
-                    <th>创建时间</th>
+                    <th #sorting($!{postDomain}, 'id')>id</th>
+                    <th #sorting($!{postDomain}, 'title')>标题</th>
+                    <th #sorting($!{postDomain}, 'username')>用户名</th>
+                    <th #sorting($!{postDomain}, 'post_type')>文章类型</th>
+                    <th #sorting($!{postDomain}, 'status')>状态</th>
+                    <th #sorting($!{postDomain}, 'created_time')>创建时间</th>
                     <th>操作</th>
                 </tr>
                 </thead>
@@ -43,7 +75,7 @@
                     <td>
                         <a href="/post/show/$!{item.id}" class="btn btn-info">查看</a>
                         <a href="/admin/post/edit/$!{item.id}" class="btn btn-warning">编辑</a>
-                        <a href="javascript:void(0);" class="btn btn-danger" onclick="del('pageForm', '/admin/post/del/'+ '$!{item.id}', '$!{item.id}')">删除</a>
+                        <a href="javascript:void(0);" class="btn btn-danger" onclick="del('pageform', '/admin/post/del/'+ '$!{item.id}', '$!{item.id}')">删除</a>
                     </td>
                 </tr>
 #end
@@ -52,5 +84,10 @@
             #showPageAdmin($!{page})
         </div>
     </div>
+    </form>
 </div>
+
+<script>
+    sortingTable()
+</script>
 

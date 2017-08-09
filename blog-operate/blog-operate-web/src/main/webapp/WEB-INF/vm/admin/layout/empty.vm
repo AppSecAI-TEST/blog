@@ -23,9 +23,11 @@
     <!-- Custom Fonts -->
     <link href="/static/admin/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <link href="/static/admin/base/css/base.css" rel="stylesheet"></link>
+
     <!-- jQuery -->
     <script src="/static/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/admin/base.js"></script>
+    <script src="/static/admin/base/base.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>

@@ -9,7 +9,7 @@
         </div>
         <!-- /.col-lg-12 -->
     </div>
-    <form id="pageForm" class="form-inline" action="/admin/post/save" method="post">
+    <form id="pageform" class="form-inline" action="/admin/post/save" method="post">
         <div class="row">
             <div class="col-lg-12">
                 <div class="form-group">

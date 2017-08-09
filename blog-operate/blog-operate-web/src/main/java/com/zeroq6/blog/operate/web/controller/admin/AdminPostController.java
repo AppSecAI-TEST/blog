@@ -42,9 +42,9 @@ public class AdminPostController {
 
     @RequestMapping("/list")
     public String list(PostDomain postDomain, Page<PostDomain> page, Model view) {
-        page.setPageSize(10);
         postService.selectPage(postDomain, page);
         view.addAttribute("page", page);
+        view.addAttribute("postDomain", postDomain);
         return "/admin/postList";
     }
 

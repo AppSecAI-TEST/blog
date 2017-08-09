@@ -259,6 +259,7 @@ public class PostService extends BaseService<PostDomain, Long> {
                 if (null == tags || tags.isEmpty() || StringUtils.isBlank(category)) {
                     throw new RuntimeException("新增文章分类和标签不能为空");
                 }
+                postDomain.setStatus(EmPostStatus.YI_FABU.value());
                 // 分类
                 RelationDomain relationDomain = new RelationDomain();
                 relationDomain.setChildId(category);
