@@ -27,7 +27,7 @@
 
     <!-- jQuery -->
     <script src="/static/admin/vendor/jquery/jquery.min.js"></script>
-    <script src="/static/admin/base/base.js"></script>
+    <script src="/static/admin/base/js/base.js"></script>
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
