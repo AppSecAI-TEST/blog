@@ -138,10 +138,14 @@
 * *#
 #macro(sorting $obj $field)#if($obj && $obj.orderField == $field) class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldType" #else class="sorting" data-orderFieldType="DESC" #end data-orderField="$field" #end
 
+
+#*
+* 表格初始化
+* postDomain => post
+* *#
 #macro(initList $domainName)
 <script type="text/javascript">
     $(function () {
-        activeNavBar('$domainName')
         var form = $("#pageform");
         if ($("#orderField").val() == null) {
             form.append('<input type="hidden" id="orderField" name="orderField">');

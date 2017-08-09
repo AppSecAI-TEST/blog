@@ -1,4 +1,4 @@
-#set($layout='admin/layout/empty.vm')
+#set($layout='admin/layout/layout.vm')
 <link rel="stylesheet" href="/static/admin/vendor/mditor/mditor.min.css"/>
 <link rel="stylesheet" href="/static/admin/vendor/multiselect/bootstrap-multiselect.css"/>
 

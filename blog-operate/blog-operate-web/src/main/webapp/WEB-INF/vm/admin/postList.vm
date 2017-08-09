@@ -1,4 +1,4 @@
-#set($layout='admin/layout/empty.vm')
+#set($layout='admin/layout/layout.vm')
 <div id="page-wrapper">
     <form id="pageform" action="/admin/post" method="post">
     <div class="row">
