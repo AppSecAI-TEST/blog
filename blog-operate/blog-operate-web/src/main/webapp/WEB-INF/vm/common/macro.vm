@@ -63,7 +63,6 @@
 #set($appendingNum = 2)
 #set($prefixAndSuffixNum = 1)
     <input type="hidden" id="currentPage" name="currentPage" value="1">
-    <input type="hidden" id="pageSize" name="pageSize" value="20">
     <nav aria-label="...">
         <ul class="pagination">
 #if($page && ${page.totalCount}>0)
@@ -112,6 +111,7 @@
 #if($page.hasNextPage)
         <li><a href="javascript:void(0);" onclick="submitPage($page.nextPage)" aria-label="Next"><span aria-hidden="true">»</span></a></li>
 #end
+        <li><a>共${page.totalCount}条记录&nbsp;&nbsp;&nbsp;共${page.pageCount}页&nbsp;&nbsp;每页&nbsp;<input type="text" id="pageSize" name="pageSize" value="${page.pageSize}" class="text-center" style="max-height: 18px; max-width: 28px; padding: 0px; margin:0px;"/>&nbsp;条</a></li>
 #else
 #end
         </ul>
@@ -141,7 +141,7 @@
 #macro(initList $domainName)
 <script type="text/javascript">
     $(function () {
-        // todo activeNavBar
+        activeNavBar('$domainName')
         var form = $("#pageform");
         if ($("#orderField").val() == null) {
             form.append('<input type="hidden" id="orderField" name="orderField">');
@@ -150,7 +150,7 @@
             form.append('<input type="hidden" id="orderFieldType" name="orderFieldType">');
         }
         sortingTable();//列表排序
-        // todo onEnterPageSizeClick();
+        onEnterPageSizeClick();
         $('#query').click(function () {
             submitFun("pageform", "${request.contextPath}/admin/${domainName}");
         });
