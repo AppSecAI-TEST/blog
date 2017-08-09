@@ -40,7 +40,7 @@ public class AdminPostController {
     @Autowired
     private DictManager dictManager;
 
-    @RequestMapping("/list")
+    @RequestMapping("")
     public String list(PostDomain postDomain, Page<PostDomain> page, Model view) {
         postService.selectPage(postDomain, page);
         view.addAttribute("page", page);
@@ -72,14 +72,14 @@ public class AdminPostController {
         }else{
             postService.editPost(postDomain, tags, category);
         }
-        return "redirect:/admin/post/list";
+        return "redirect:/admin/post";
     }
 
 
-    @RequestMapping("/del/{id}")
+    @RequestMapping("/delete/{id}")
     public String del(@PathVariable Long id, Model view) {
         postManager.deleteById(id);
-        return "redirect:/admin/post/list";
+        return "redirect:/admin/post";
     }
 
 

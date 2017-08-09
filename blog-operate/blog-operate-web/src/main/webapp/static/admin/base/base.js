@@ -12,18 +12,16 @@ function submitPage(pageNo) {
     }
 }
 
-/**
- * 删除函数
- * @param elementId
- * @param url
- * @param title
- */
-function del(elementId, url, id) {
-    if (!confirm('是否删除编号为' + id + '的数据？')) {
-        return;
-    }
+function submitFun(elementId, url) {
     $("#" + elementId).attr("action", url);
     $('#' + elementId).submit();
+}
+
+function submitConfirmFun(elementId, url, title) {
+    if (!confirm(title)) {
+        return;
+    }
+    submitFun(elementId, url);
 }
 
 

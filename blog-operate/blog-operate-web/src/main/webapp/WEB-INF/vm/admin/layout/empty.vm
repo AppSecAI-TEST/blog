@@ -389,6 +389,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="/static/admin/dist/js/sb-admin-2.js"></script>
 
+    <!-- My97时间控件 -->
+    <script type="text/javascript" src="/static/admin/vendor/My97DatePicker/WdatePicker.js"></script>
+
 </body>
 
 </html>

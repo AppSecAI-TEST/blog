@@ -63,7 +63,7 @@
 #set($appendingNum = 2)
 #set($prefixAndSuffixNum = 1)
     <input type="hidden" id="currentPage" name="currentPage" value="1">
-    <input type="hidden" id="pageSize" name="pageSize" value="10">
+    <input type="hidden" id="pageSize" name="pageSize" value="20">
     <nav aria-label="...">
         <ul class="pagination">
 #if($page && ${page.totalCount}>0)
@@ -110,7 +110,7 @@
 #end
 #end
 #if($page.hasNextPage)
-        <li><a href="javascript:void(0);" onclick="submitPage($!{i})" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+        <li><a href="javascript:void(0);" onclick="submitPage($page.nextPage)" aria-label="Next"><span aria-hidden="true">»</span></a></li>
 #end
 #else
 #end
@@ -137,5 +137,34 @@
 * 排序
 * *#
 #macro(sorting $obj $field)#if($obj && $obj.orderField == $field) class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldType" #else class="sorting" data-orderFieldType="DESC" #end data-orderField="$field" #end
+
+#macro(initList $domainName)
+<script type="text/javascript">
+    $(function () {
+        // todo activeNavBar
+        var form = $("#pageform");
+        if ($("#orderField").val() == null) {
+            form.append('<input type="hidden" id="orderField" name="orderField">');
+        }
+        if ($("#orderFieldType").val() == null) {
+            form.append('<input type="hidden" id="orderFieldType" name="orderFieldType">');
+        }
+        sortingTable();//列表排序
+        // todo onEnterPageSizeClick();
+        $('#query').click(function () {
+            submitFun("pageform", "${request.contextPath}/admin/${domainName}");
+        });
+        $('#create').click(function () {
+            submitFun("pageform", "${request.contextPath}/admin/${domainName}/edit/0");
+        });
+    });
+
+    <!-- 删除函数 -->
+    function del(id) {
+        submitConfirmFun("pageform", "${request.contextPath}/admin/${domainName}/delete/" + id, "确定删除编号为" + id + "的数据？")
+    }
+</script>
+#end
+
 
 
