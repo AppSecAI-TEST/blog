@@ -63,7 +63,7 @@ public class AttachManager extends BaseManager<AttachDomain, Long> {
         if (null != attachDomain) {
             file = new File(attachManager.getUploadPath() + File.separator + attachDomain.getName());
         }
-        if (null == attachDomain || !file.exists()) {
+        if (null == attachDomain || !file.exists() || file.isDirectory()) {
             throw new RuntimeException("删除文件失败, 文件不存在");
         }
         if(!file.delete()){

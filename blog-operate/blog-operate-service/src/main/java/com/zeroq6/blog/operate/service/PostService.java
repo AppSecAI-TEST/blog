@@ -97,6 +97,9 @@ public class PostService extends BaseService<PostDomain, Long> {
             List<DictDomain> sidebarCategories = dictManager.getDictByType(EmDictDictType.FENLEI.value());
             List<DictDomain> sidebarTags = dictManager.getDictByType(EmDictDictType.BIAOQIAN.value());
             List<DictDomain> sidebarLinks = dictManager.getDictByType(EmDictDictType.LIANJIE.value());
+            // 站点信息
+            List<DictDomain> siteInfo = dictManager.getDictByType(EmDictDictType.ZHANDIAN_XINXI.value());
+            dataMap.putAll(dictManager.transferMap(siteInfo));
             PostDomain query0 = new PostDomain();
             query0.setPostType(EmPostPostType.WENZHANG.value());
             query0.setStatus(EmPostStatus.YI_FABU.value());
