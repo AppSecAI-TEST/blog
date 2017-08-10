@@ -45,7 +45,7 @@ public class AdminPostController {
         postService.selectPage(postDomain, page);
         view.addAttribute("page", page);
         view.addAttribute("postDomain", postDomain);
-        return "/admin/postList";
+        return "/admin/post/postList";
     }
 
     @RequestMapping("/edit/{id}")
@@ -60,7 +60,7 @@ public class AdminPostController {
         }
         view.addAttribute("tagsAll", dictManager.getDictByType(EmDictDictType.BIAOQIAN.value()));
         view.addAttribute("categoryAll", dictManager.getDictByType(EmDictDictType.FENLEI.value()));
-        return "/admin/postEdit";
+        return "/admin/post/postEdit";
     }
 
     @RequestMapping("/save")

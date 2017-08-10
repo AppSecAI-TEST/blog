@@ -136,7 +136,7 @@
 #*
 * 排序
 * *#
-#macro(sorting $obj $field)#if($obj && $obj.orderField == $field) class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldType" #else class="sorting" data-orderFieldType="DESC" #end data-orderField="$field" #end
+#macro(sorting $obj $field)#if($obj && $obj.orderField == $field) class="sorting_$obj.orderFieldType" data-orderFieldType="$obj.orderFieldType" #else class="sorting" data-orderFieldType="ASC" #end data-orderField="$field" #end
 
 
 #*
