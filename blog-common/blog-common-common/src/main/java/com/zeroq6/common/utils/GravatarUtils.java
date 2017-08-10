@@ -10,7 +10,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * Created by zengshengxin on 2017/7/10.
+ * Created by yuuki asuna on 2017/7/10.
  */
 public class GravatarUtils {
 

@@ -1,7 +1,6 @@
 package com.zeroq6.blog.operate.web.controller.admin;
 
 import com.zeroq6.blog.common.domain.CommentDomain;
-import com.zeroq6.blog.common.domain.PostDomain;
 import com.zeroq6.blog.operate.service.CommentService;
 import com.zeroq6.common.base.Page;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,7 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
- * Created by zengshengxin on 2017/8/10.
+ * Created by yuuki asuna on 2017/8/10.
  */
 
 @Controller
