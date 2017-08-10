@@ -2,6 +2,8 @@ package com.zeroq6.blog.operate.web.controller;
 
 import com.zeroq6.blog.common.base.BaseController;
 import com.zeroq6.blog.common.domain.PostDomain;
+import com.zeroq6.blog.common.enums.field.EmDictDictType;
+import com.zeroq6.blog.operate.manager.DictManager;
 import com.zeroq6.blog.operate.service.PostService;
 import com.zeroq6.common.base.BaseResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -23,6 +25,12 @@ import java.util.Map;
 @RequestMapping("/categories")
 public class CategoryController extends BaseController {
 
+    @Autowired
+    private DictManager dictManager;
+
+
+    @Autowired
+    private PostService postService;
 
     @ModelAttribute
     public void loadState(Model model) {
@@ -30,9 +38,6 @@ public class CategoryController extends BaseController {
         model.addAttribute("title", "归档");
         model.addAllAttributes(postService.getSidebarInfo().getBody());
     }
-
-    @Autowired
-    private PostService postService;
 
     @RequestMapping(value = "/{category}")
     public String show(@PathVariable String category, Model view) {
@@ -42,7 +47,7 @@ public class CategoryController extends BaseController {
         BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(category, null);
         if (result.isSuccess()) {
             view.addAttribute("archiveMapList", result.getBody());
-            view.addAttribute("classify", category);
+            view.addAttribute("classify", dictManager.getDictByTypeAndKey(EmDictDictType.FENLEI.value(), category).getDictValue());
             return "/archives";
         }
         return null;

@@ -2,6 +2,8 @@ package com.zeroq6.blog.operate.web.controller;
 
 import com.zeroq6.blog.common.base.BaseController;
 import com.zeroq6.blog.common.domain.PostDomain;
+import com.zeroq6.blog.common.enums.field.EmDictDictType;
+import com.zeroq6.blog.operate.manager.DictManager;
 import com.zeroq6.blog.operate.service.PostService;
 import com.zeroq6.common.base.BaseResponse;
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +28,9 @@ public class TagsController extends BaseController {
     @Autowired
     private PostService postService;
 
+    @Autowired
+    private DictManager dictManager;
+
     @ModelAttribute
     public void loadState(Model model) {
         model.addAttribute("menu", "archives");
@@ -41,7 +46,7 @@ public class TagsController extends BaseController {
         BaseResponse<Map<String, List<PostDomain>>> result = postService.getArchiveList(null, tag);
         if (result.isSuccess()) {
             view.addAttribute("archiveMapList", result.getBody());
-            view.addAttribute("classify", tag);
+            view.addAttribute("classify", dictManager.getDictByTypeAndKey(EmDictDictType.BIAOQIAN.value(), tag).getDictValue());
             return "/archives";
         }
         return null;
