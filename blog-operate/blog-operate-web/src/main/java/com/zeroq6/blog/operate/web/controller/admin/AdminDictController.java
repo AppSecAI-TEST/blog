@@ -47,12 +47,7 @@ public class AdminDictController {
 
     @RequestMapping("/save")
     public String save(DictDomain dictDomain, Model view) {
-        if(null == dictDomain.getId() || dictDomain.getId() <= 0L){
-            dictService.insert(dictDomain);
-        }else{
-            dictService.updateByKey(dictDomain);
-        }
-        dictManager.flushDictList();
+        dictManager.saveOrUpdate(dictDomain);
         return "redirect:/admin/dict";
     }
 

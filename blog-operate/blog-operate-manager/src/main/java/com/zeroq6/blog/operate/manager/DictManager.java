@@ -7,7 +7,9 @@ import com.zeroq6.blog.common.domain.DictDomain;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.beans.Transient;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -111,6 +113,16 @@ public class DictManager extends BaseManager<DictDomain, Long> implements Initia
             valueList.add(dictDomain.getDictValue());
         }
         return valueList;
+    }
+
+    @Transactional
+    public void saveOrUpdate(DictDomain dictDomain){
+        if(null == dictDomain.getId() || dictDomain.getId() <= 0L){
+            insert(dictDomain);
+        }else{
+            updateByKey(dictDomain);
+        }
+        flushDictList();
     }
 
 

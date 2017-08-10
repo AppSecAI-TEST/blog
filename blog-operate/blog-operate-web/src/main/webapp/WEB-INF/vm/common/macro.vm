@@ -111,7 +111,7 @@
 #if($page.hasNextPage)
         <li><a href="javascript:void(0);" onclick="submitPage($page.nextPage)" aria-label="Next"><span aria-hidden="true">»</span></a></li>
 #end
-        <li><a>共${page.totalCount}条记录&nbsp;&nbsp;&nbsp;共${page.pageCount}页&nbsp;&nbsp;每页&nbsp;<input type="text" id="pageSize" name="pageSize" value="${page.pageSize}" class="text-center" style="max-height: 18px; max-width: 28px; padding: 0px; margin:0px;"/>&nbsp;条</a></li>
+        <li><a>共${page.totalCount}条记录&nbsp;&nbsp;&nbsp;共${page.pageCount}页&nbsp;&nbsp;每页&nbsp;<input type="text" id="pageSize" name="pageSize" value="${page.pageSize}" maxlength="10" class="text-center" style="max-height: 18px; max-width: 28px; padding: 0px; margin:0px;"/>&nbsp;条</a></li>
 #else
 #end
         </ul>
