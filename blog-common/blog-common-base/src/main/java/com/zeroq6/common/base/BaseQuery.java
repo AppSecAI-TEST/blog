@@ -42,7 +42,7 @@ public abstract class BaseQuery<T extends BaseQuery> implements Serializable {
             return (T)this;
         }
         for (int i = 0; i < orderField.length(); i++) {
-            if (!Character.isLetter(orderField.charAt(i)) && orderField.charAt(i) != '_') {
+            if (!Character.isLetterOrDigit(orderField.charAt(i)) && orderField.charAt(i) != '_') {
                 return (T)this;
             }
         }

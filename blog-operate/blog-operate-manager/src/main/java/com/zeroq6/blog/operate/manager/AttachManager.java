@@ -55,11 +55,11 @@ public class AttachManager extends BaseManager<AttachDomain, Long> {
 
     @Transactional
     public void deleteById(Long id){
+        AttachDomain attachDomain = selectByKey(id);
         // 先disable数据库记录，然后删文件，异常可回滚
         disableByKey(id);
         //
         File file = null;
-        AttachDomain attachDomain = selectByKey(id);
         if (null != attachDomain) {
             file = new File(attachManager.getUploadPath() + File.separator + attachDomain.getName());
         }
