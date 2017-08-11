@@ -16,10 +16,6 @@
     <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css">
     <script type="text/javascript" src="/static/default/js/jquery.min.js?v=2.0.1"></script>
     <script src="https://use.typekit.net/cwj3gfk.js"></script>
-    <script>try {
-        Typekit.load({async: true});
-    } catch (e) {
-    }</script>
     <link rel="Shortcut Icon" type="image/x-icon" href="/favicon.ico">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
     <link rel="apple-touch-icon-precomposed" href="/apple-touch-icon.png">

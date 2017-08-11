@@ -18,10 +18,6 @@
                                 <input type="text" name="id" value="$!{dictDomain.id}" maxlength="10" onchange='this.value = this.value.replace(/[^\d]*/gi,"")' class="form-control" >
                             </div>
                             <div class="col-xs-3 input-group">
-                                <span class="input-group-addon">字典类型</span>
-                                #emOptionAll('EmDictDictType', $!{dictDomain.dictType}, 'dictType')
-                            </div>
-                            <div class="col-xs-3 input-group">
                                 <span class="input-group-addon">字典键</span>
                                 <input type="text" name="extendMap[dictKeyLike]" value="$!{dictDomain.extendMap.dictKeyLike}"  onchange='this.value=this.value.replace(/(^\s*)|(\s*$)/gi,"")' class="form-control" >
                             </div>
@@ -31,6 +27,10 @@
                             </div>
                         </div>
                         <div class="row form-inline">
+                            <div class="col-xs-3 input-group">
+                                <span class="input-group-addon">字典类型</span>
+                                #emOptionAll('EmDictDictType', $!{dictDomain.dictType}, 'dictType')
+                            </div>
                             <div class="col-xs-3 input-group">
                                 <span class="input-group-addon">创建时间</span>
                                 <input type="text" name="extendMap[createdTimeBegin]" value="$!{dictDomain.extendMap.createdTimeBegin}" class="form-control" id="createdTimeBegin" onfocus="WdatePicker({readOnly:true,dateFmt:'yyyy-MM-dd HH:mm:ss',lang:'zh-cn',skin:'twoer',maxDate:'#F{$dp.$D(\'createdTimeEnd\')}'})">
