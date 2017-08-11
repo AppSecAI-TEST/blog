@@ -60,14 +60,17 @@ public class CommentService extends BaseService<CommentDomain, Long> {
     public BaseResponse<String> post(CommentDomain commentDomain) {
         try {
             // 校验
-            if (!UrlValidator.getInstance().isValid(commentDomain.getUrl())) {
-                throw new RuntimeException("url格式错误");
+            if (StringUtils.isBlank(commentDomain.getUsername())) {
+                throw new RuntimeException("称呼不能为空");
             }
             if (!EmailValidator.getInstance().isValid(commentDomain.getEmail())) {
                 throw new RuntimeException("邮箱格式错误");
             }
-            if (StringUtils.isBlank(commentDomain.getUsername())) {
-                throw new RuntimeException("称呼不能为空");
+            if (null != commentDomain.getUrl() && !UrlValidator.getInstance().isValid(commentDomain.getUrl())) {
+                throw new RuntimeException("url格式错误");
+            }
+            if(StringUtils.isBlank(commentDomain.getContent())){
+                throw new RuntimeException("评论内容不能为空");
             }
             if (null == commentDomain.getPostId() || null == commentDomain.getParentType() || null == commentDomain.getParentId()) {
                 throw new RuntimeException("文章id，关联id，关联类型不能为空");

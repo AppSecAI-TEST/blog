@@ -19,40 +19,4 @@ function replyTo(postId, parentId) {
     commentArea.find("textarea[name='content']").attr('placeholder', quote);
 }
 
-function applyComment() {
-    $('#commentArea').find('input, textarea').each(function () {
-        $(this).val(jQuery.trim($(this).val()));
-    });
-    var commentArea = $('#commentArea');
-    var username = commentArea.find("input[name='username']").val().trim();
-    var email = commentArea.find("input[name='email']").val().trim();
-    var url = commentArea.find("input[name='url']").val().trim();
-    if (username != '') {
-        Cookies.set("username", username);
-    }
-    if (email != '') {
-        Cookies.set("email", email);
-    }
-    if (url != '') {
-        Cookies.set("url", url);
-    }
-    return true;
-}
-
-
-$(document).ready(function () {
-    var commentArea = $('#commentArea');
-    var username = Cookies.get("username");
-    var email = Cookies.get("email");
-    var url = Cookies.get("url");
-    if (undefined != username) {
-        commentArea.find("input[name='username']").val(username);
-    }
-    if (undefined != email) {
-        commentArea.find("input[name='email']").val(email);
-    }
-    if (undefined != url) {
-        commentArea.find("input[name='url']").val(url);
-    }
-});
 

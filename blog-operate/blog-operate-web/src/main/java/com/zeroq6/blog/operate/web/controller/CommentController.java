@@ -46,8 +46,15 @@ public class CommentController extends BaseController {
         if (StringUtils.isBlank(referer)) {
             return redirect(commentDomain);
         }
+        // ip UA
         commentDomain.setIp(MyWebUtils.getClientIp(request));
         commentDomain.setUserAgent(userAgent);
+        // trim
+        commentDomain.setUsername(StringUtils.trim(commentDomain.getUsername()));
+        commentDomain.setEmail(StringUtils.trim(commentDomain.getEmail()));
+        commentDomain.setUrl(StringUtils.trim(commentDomain.getUrl()));
+        commentDomain.setContent(StringUtils.trim(commentDomain.getContent()));
+        //
         BaseResponse<String> result = commentService.post(commentDomain);
         if (result.isSuccess()) {
             return redirect(commentDomain) + "#c" + commentDomain.getId();
