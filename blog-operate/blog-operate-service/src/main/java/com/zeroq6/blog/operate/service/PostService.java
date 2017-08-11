@@ -136,7 +136,7 @@ public class PostService extends BaseService<PostDomain, Long> {
             this.selectPage(contentDomain, p);
             for (PostDomain postDomain : p.getData()) {
                 String text = Jsoup.parse(MarkdownUtils.parse(postDomain.getContent())).text();
-                postDomain.getExtendMap().put("contentSummary", text.substring(0, text.length() > 200 ? 200 : text.length() - 1) + "...");
+                postDomain.getExtendMap().put("contentSummary", text.length() > 200 ? text.substring(0, 200) + "..." : text);
             }
             return new BaseResponse<Page<PostDomain>>(true, "成功", p);
         } catch (Exception e) {

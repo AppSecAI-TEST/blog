@@ -69,7 +69,7 @@ public class AtomService implements InitializingBean {
                 extendMap.put("content", content);
                 //
                 String summary = Jsoup.parse(content).text();
-                extendMap.put("summary", summary.substring(0, summary.length() > 200 ? 200 : summary.length() - 1));
+                extendMap.put("summary", summary.length() > 200 ? summary.substring(0, 200) + "..." : summary);
             }
             vc.put("postDomainList", postDomainList);
             String desPath = velocityManager.getResourceRootPath() + "/" + "atom.xml";

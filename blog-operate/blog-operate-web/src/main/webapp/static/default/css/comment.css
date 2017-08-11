@@ -137,11 +137,13 @@ div.body .quote {
     border: 1px solid #666;
     background: rgba(252, 249, 249, 0.5);
     word-wrap: break-word;
-    max-width: 75ch
+    max-width: 75ch;
+    line-height:1.5
 }
 div.content .body {
     word-wrap: break-word;
-    max-width: 75ch
+    max-width: 75ch;
+    line-height:1.5
 }
 
 .quote p, .quote div {

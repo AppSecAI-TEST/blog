@@ -1,25 +1,20 @@
-package com.zeroq6.blog.operate.web.controller;
+package com.zeroq6.blog.operate.web.controller.admin;
 
-import com.zeroq6.blog.common.base.BaseController;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.annotation.Resource;
-
 /**
- * @author icgeass@hotmail.com
- * @date 2017-05-17
+ * Created by yuuki ausna on 2017/8/11.
  */
-@Controller("/")
-public class IndexController extends BaseController{
+
+@Controller
+@RequestMapping("/admin")
+public class AdminIndexController {
+
 
     @RequestMapping(value = "", method = {RequestMethod.GET})
     public String index() throws Exception {
-        return "redirect:/post" ;
+        return "redirect:/admin/post" ;
     }
-
-
 }
-
-
